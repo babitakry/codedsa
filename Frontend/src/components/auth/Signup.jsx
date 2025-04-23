@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Signup = () => {
     return (
@@ -16,7 +17,7 @@ const Signup = () => {
                             <input
                                 type="email"
                                 id="email"
-                                className="w-full p-2.5 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 focus:ring-teal-600 focus:border-teal-600 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                                className="w-full p-2.5 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 focus:ring-indigo-600 focus:border-indigo-600 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
                                 placeholder="name@company.com"
                                 required
                             />
@@ -29,7 +30,7 @@ const Signup = () => {
                                 type="password"
                                 id="password"
                                 placeholder="••••••••"
-                                className="w-full p-2.5 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 focus:ring-teal-600 focus:border-teal-600 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                                className="w-full p-2.5 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 focus:ring-indigo-600 focus:border-indigo-600 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
                                 required
                             />
                         </div>
@@ -41,7 +42,7 @@ const Signup = () => {
                                 type="password"
                                 id="confirm-password"
                                 placeholder="••••••••"
-                                className="w-full p-2.5 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 focus:ring-teal-600 focus:border-teal-600 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                                className="w-full p-2.5 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 focus:ring-indigo-600 focus:border-indigo-600 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
                                 required
                             />
                         </div>
@@ -49,7 +50,7 @@ const Signup = () => {
                             <label className="flex items-center text-gray-500 dark:text-gray-300">
                                 <input
                                     type="checkbox"
-                                    className="mr-2 w-4 h-4 rounded border border-gray-300 bg-gray-50 focus:ring-teal-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-teal-600"
+                                    className="mr-2 w-4 h-4 rounded border border-gray-300 bg-gray-50 focus:ring-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-indigo-600"
                                     required
                                 />
                                 I agree to the terms and conditions
@@ -57,15 +58,15 @@ const Signup = () => {
                         </div>
                         <button
                             type="submit"
-                            className="w-full py-2.5 px-5 text-sm font-medium text-white bg-teal-600 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-4 focus:ring-teal-300 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800"
+                            className="w-full py-2.5 px-5 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
                         >
                             Sign up
                         </button>
                         <p className="text-sm text-center text-gray-500 dark:text-gray-400">
                             Already have an account?{' '}
-                            <a href="#" className="font-medium text-teal-600 hover:underline dark:text-teal-500">
+                            <Link to="/signin" className="font-medium text-indigo-600 hover:underline dark:text-indigo-500">
                                 Sign in
-                            </a>
+                            </Link>
                         </p>
                     </form>
                 </div>
