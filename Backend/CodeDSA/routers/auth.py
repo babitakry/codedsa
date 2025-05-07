@@ -42,6 +42,8 @@ async def signin(request: SignInForm, db: Session = Depends(database.get_db)):
     # 3. if exist then match the password
     if not hashing.Hash.verify(user_exist.password, request.password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Password")
+    
+    
 
     return {
         "message": "Login Successfully !!"
