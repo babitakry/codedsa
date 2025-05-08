@@ -27,6 +27,8 @@ const Signin = () => {
                 }
             });
             console.log(response);
+            localStorage.setItem("token",response.data?.access_token);
+            navigate("/")
             
           } catch (err) {
             console.log(err.response)
@@ -34,7 +36,6 @@ const Signin = () => {
             if(err.response.status == 404){
                 // Redirect to Sign Up page
                 navigate("/signup")
-
             }
           }
         setIsSigning(false)
