@@ -1,7 +1,49 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Signup = () => {
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [isSignuping, setIsSignuping] = useState(false)
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+
+    const register = async(e) => {
+        setIsSignuping(true);
+        e.preventDefault();
+        console.log("Username = ", username)
+        console.log("Email = ",email)
+        console.log("Password = ",password)
+
+        // connect with backend
+        try {
+            const response = await axios({
+                method: "POST",
+                url:"http://127.0.0.1:8000/signup",
+                data:{
+                    username: username,
+                    email: email,
+                    password: password
+                }
+            });
+            console.log(response);
+            
+          } catch (err) {
+            console.log(err.response)
+            setError(err?.response?.data?.detail);
+            if(err.response.status == 409){
+                // Redirect to Sign in page
+                navigate("/signin")
+
+            }
+            
+          }
+        setIsSignuping(false)
+
+    }
+
     return (
         <div className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center px-6 py-8">
             <div className="w-full max-w-md bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
@@ -9,12 +51,27 @@ const Signup = () => {
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-center">
                         Create a new account
                     </h1>
-                    <form className="space-y-4">
+                            
+                    <form onSubmit={register} className="space-y-4">
+                        <div>
+                            <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                Username
+                            </label>
+                            <input
+                                onChange={(e)=>setUsername(e.target.value)}
+                                type="text"
+                                id="username"
+                                className="w-full p-2.5 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 focus:ring-indigo-600 focus:border-indigo-600 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                                placeholder="Enter your username"
+                                required
+                            />
+                        </div>
                         <div>
                             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 Your email
                             </label>
                             <input
+                                onChange={(e)=>setEmail(e.target.value)}
                                 type="email"
                                 id="email"
                                 className="w-full p-2.5 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 focus:ring-indigo-600 focus:border-indigo-600 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
@@ -27,6 +84,7 @@ const Signup = () => {
                                 Password
                             </label>
                             <input
+                                onChange={(e)=>setPassword(e.target.value)}
                                 type="password"
                                 id="password"
                                 placeholder="••••••••"
@@ -39,6 +97,7 @@ const Signup = () => {
                                 Confirm Password
                             </label>
                             <input
+                                
                                 type="password"
                                 id="confirm-password"
                                 placeholder="••••••••"
@@ -46,7 +105,7 @@ const Signup = () => {
                                 required
                             />
                         </div>
-                        <div className="flex items-center justify-between text-sm">
+                        {/* <div className="flex items-center justify-between text-sm">
                             <label className="flex items-center text-gray-500 dark:text-gray-300">
                                 <input
                                     type="checkbox"
@@ -55,7 +114,7 @@ const Signup = () => {
                                 />
                                 I agree to the terms and conditions
                             </label>
-                        </div>
+                        </div> */}
                         <button
                             type="submit"
                             className="w-full py-2.5 px-5 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
@@ -69,6 +128,7 @@ const Signup = () => {
                             </Link>
                         </p>
                     </form>
+
                 </div>
             </div>
         </div>

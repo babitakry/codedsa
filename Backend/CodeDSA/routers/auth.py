@@ -1,8 +1,9 @@
 from fastapi import APIRouter, status, HTTPException, Depends
 from sqlalchemy.orm import Session
-from ..schema import SignUpForm, SignInForm
+from ..schemas import SignUpForm, SignInForm
+from fastapi.security import OAuth2PasswordRequestForm
 from ..models import User
-from .. import database, models, hashing
+from .. import database, models, hashing, token
 
 router = APIRouter()
 
@@ -31,21 +32,20 @@ async def signup(data: SignUpForm, db: Session = Depends(database.get_db)):
 
 # 2. /login
 @router.post("/signin")
-async def signin(request: SignInForm, db: Session = Depends(database.get_db)):
+async def signin(request:SignInForm, db: Session = Depends(database.get_db)):
     # 1. Chech username is exits in the db or not
     user_exist = db.query(User).filter_by(username = request.username).first()
 
     # 2. if not exist:
     if not user_exist:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User Does Not Exist !!")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User Does Not Exist !! Please Sign Up first")
     
     # 3. if exist then match the password
     if not hashing.Hash.verify(user_exist.password, request.password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Password")
     
-    
 
-    return {
-        "message": "Login Successfully !!"
-    }
+
+    access_token = token.create_access_token(data={"sub": user_exist.username})
+    return {"access_token": access_token, "token_type": "bearer"}
 

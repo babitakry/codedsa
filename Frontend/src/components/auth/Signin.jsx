@@ -1,7 +1,45 @@
-import React from 'react';
-import { Link } from 'react-router';
+import axios from 'axios';
+import React, { use, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
+
 
 const Signin = () => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [isSigning, setIsSigning] = useState(false);
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+
+    const onSubmit = async(e) => {
+        setIsSigning(true);
+        e.preventDefault();
+        console.log("Username = ", username)
+        console.log("Password = ",password)
+
+        // connect with backend
+        try {
+            const response = await axios({
+                method: "POST",
+                url:"http://127.0.0.1:8000/signin",
+                data:{
+                    username: username,
+                    password: password
+                }
+            });
+            console.log(response);
+            
+          } catch (err) {
+            console.log(err.response)
+            setError(err?.response?.data?.detail);
+            if(err.response.status == 404){
+                // Redirect to Sign Up page
+                navigate("/signup")
+
+            }
+          }
+        setIsSigning(false)
+
+    }
     return (
         <div className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center px-6 py-8">
             <div className="w-full max-w-md bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
@@ -9,16 +47,16 @@ const Signin = () => {
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-center">
                         Sign in to your account
                     </h1>
-                    <form className="space-y-4">
+                    <form  onSubmit={onSubmit} className="space-y-4">
                         <div>
-                            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Your email
+                            <label htmlFor="text" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                Your Username
                             </label>
                             <input
-                                type="email"
-                                id="email"
+                                onChange={(e)=>setUsername(e.target.value)}
+                                type="text"
                                 className="w-full p-2.5 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 focus:ring-indigo-600 focus:border-indigo-600 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
-                                placeholder="name@company.com"
+                                placeholder="username"
                                 required
                             />
                         </div>
@@ -27,14 +65,14 @@ const Signin = () => {
                                 Password
                             </label>
                             <input
+                                onChange={(e)=>setPassword(e.target.value)}
                                 type="password"
-                                id="password"
                                 placeholder="••••••••"
                                 className="w-full p-2.5 rounded-lg border border-gray-300 bg-gray-50 text-gray-900 focus:ring-indigo-600 focus:border-indigo-600 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
                                 required
                             />
                         </div>
-                        <div className="flex items-center justify-between text-sm">
+                        {/* <div className="flex items-center justify-between text-sm">
                             <label className="flex items-center text-gray-500 dark:text-gray-300">
                                 <input
                                     type="checkbox"
@@ -46,12 +84,24 @@ const Signin = () => {
                             <Link to="#" className="text-indigo-600 hover:underline dark:text-indigo-500">
                                 Forgot password?
                             </Link>
+                        </div> */}
+
+                        <div className='text-red-500'>
+                            {
+                                error &&
+                                <span>
+                                    {error}
+                                </span>
+                            }
                         </div>
                         <button
+                            disabled={isSigning}
                             type="submit"
                             className="w-full py-2.5 px-5 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
                         >
-                            Sign in
+                            {
+                                isSigning ? "Signing" : "Sign in"
+                            }
                         </button>
                         <p className="text-sm text-center text-gray-500 dark:text-gray-400">
                             Don’t have an account yet?{' '}
