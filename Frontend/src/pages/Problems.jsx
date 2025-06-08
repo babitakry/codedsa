@@ -3,12 +3,40 @@ import Question from '../components/Question/Question'
 
 const Problems = () => {
     const problem_list = [
-        { Q_no: 1, Q_name: 'Add Two Numbers', Q_level: 'Med', topic: 'Linked List' },
-        { Q_no: 2, Q_name: 'Two Sum', Q_level: 'Easy', topic: 'Array' },
-        { Q_no: 3, Q_name: 'Longest Substring Without Repeating Characters', Q_level: 'Med', topic: 'Sliding Window' },
-        { Q_no: 4, Q_name: 'Median of Two Sorted Arrays', Q_level: 'Hard', topic: 'Binary Search' },
-        { Q_no: 5, Q_name: 'Longest Palindromic Substring', Q_level: 'Med', topic: 'Dynamic Programming' },
-        { Q_no: 6, Q_name: 'Reverse Integer', Q_level: 'Med', topic: 'Math' },
+        { 
+            Q_no: 1, 
+            Q_name: 'Add Two Numbers', 
+            Q_level: 'Med', 
+            topic: 'Linked List' 
+        },
+        { 
+            Q_no: 2, 
+            Q_name: 'Two Sum', 
+            Q_level: 'Easy', 
+            topic: 'Array' 
+        },
+        { 
+            Q_no: 3, 
+            Q_name: 'Longest Substring Without Repeating Characters', 
+            Q_level: 'Med', topic: 'Sliding Window' 
+        },
+        { 
+            Q_no: 4, 
+            Q_name: 'Median of Two Sorted Arrays', 
+            Q_level: 'Hard', topic: 'Binary Search' 
+        },
+        { 
+            Q_no: 5, 
+            Q_name: 'Longest Palindromic Substring', 
+            Q_level: 'Med', 
+            topic: 'Dynamic Programming' 
+        },
+        { 
+            Q_no: 6, 
+            Q_name: 'Reverse Integer', 
+            Q_level: 'Med', 
+            topic: 'Math' 
+        },
       ];
       
 

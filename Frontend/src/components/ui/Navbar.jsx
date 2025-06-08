@@ -32,8 +32,8 @@ const Navbar = () => {
           </ul>
 
           {/* Profile Icon Button */}
-          <button
-            type="button"
+          <Link
+            to = "/profile"
             className="flex text-sm bg-amber-100 rounded-full focus:ring-4 focus:ring-amber-100 dark:focus:ring-amber-300"
           >
             <img
@@ -41,7 +41,7 @@ const Navbar = () => {
               src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
               alt="user"
             />
-          </button>
+          </Link>
         </div>
       </div>
     </nav>

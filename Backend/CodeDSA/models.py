@@ -20,7 +20,6 @@ class User(Base):
     username = Column(String, unique=True, nullable=False)
     email = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
-    auth_provider = Column(String)
     solved_no_questions = Column(Integer, default=0)
     social_links = Column(JSON) 
     skills = Column(JSON)

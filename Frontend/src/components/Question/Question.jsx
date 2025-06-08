@@ -1,11 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 const Question = ({ problem, index }) => {
   return (
     <div
-      className={`${
-        index % 2 === 0 ? 'bg-gray-100' : 'bg-transparent'
-      } flex justify-between items-center px-4 border rounded-md py-3`}
+      className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-transparent'} flex justify-between items-center px-4 border rounded-md py-3`}
     >
       <span className="w-8">{problem?.Q_no}.</span>
 
@@ -16,9 +15,9 @@ const Question = ({ problem, index }) => {
 
       <div className="flex items-center space-x-4">
         <p className="">{problem?.Q_level}.</p>
-        <button className="px-3 py-1 rounded-md text-sm bg-blue-500 text-white hover:bg-blue-600 transition">
-          Not Solved
-        </button>
+        <Link to={problem?.Q_name} className="px-3 py-1 rounded-md text-sm bg-blue-500 text-white hover:bg-blue-600 transition">
+          Solve Problem
+        </Link>
       </div>
     </div>
   )
