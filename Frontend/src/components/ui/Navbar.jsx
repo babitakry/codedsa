@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import CodeBite from '../../assets/CodeBite.png'
 
 const Navbar = () => {
   return (
@@ -7,8 +8,8 @@ const Navbar = () => {
       <div className="max-w-screen-xl mx-auto flex flex-wrap items-center justify-between p-4">
         {/* Logo Section */}
         <Link to="/" className="flex items-center space-x-2">
-          <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Logo" />
-          <span className="text-2xl font-semibold text-amber-100">Flowbite</span>
+          <img src={CodeBite} className="h-8 rounded-full" alt="Logo" />
+          <span className="text-2xl font-semibold text-amber-100">Codebite</span>
         </Link>
 
         {/* Navigation Links and Profile Button */}
