@@ -51,7 +51,7 @@ const Problems = () => {
 
     return (
         <div className='max-w-6xl mx-auto min-h-screen'>
-            <h2 className='text-4xl text-center font-semibold text-indigo-600 mt-10 '>Problems List</h2>
+            <h2 className='text-4xl text-center font-semibold text-primary mt-10 '>Problems List</h2>
             <div className='mt-4'>
                 {problem_list.map((problem, ind) => (
                     <Question

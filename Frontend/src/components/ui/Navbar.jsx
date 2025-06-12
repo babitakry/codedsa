@@ -16,17 +16,17 @@ const Navbar = () => {
         <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-8 mt-4 md:mt-0">
           <ul className="flex flex-col md:flex-row items-start md:items-center md:space-x-8 font-medium">
             <li>
-              <Link to="/" className=" py-2 px-3 text-white hover:text-indigo-400">
+              <Link to="/" className=" py-2 px-3 text-white hover:text-black">
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/about" className="py-2 px-3 text-white hover:text-indigo-400">
+              <Link to="/about" className="py-2 px-3 text-white hover:text-black">
                 About
               </Link>
             </li>
             <li>
-              <Link to="/problems" className="py-2 px-3 text-white hover:text-indigo-400">
+              <Link to="/problems" className="py-2 px-3 text-white hover:text-black">
                 Problem List
               </Link>
             </li>
