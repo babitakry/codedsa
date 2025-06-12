@@ -1,4 +1,5 @@
 import { useState } from "react"
+import Editor from '@monaco-editor/react';
 import React from 'react'
 import {
     Play,
@@ -16,7 +17,7 @@ const RightSide = () => {
       }
   };`)
     return (
-        <div className="w-full flex flex-col">
+        <div className="w-full h-full flex flex-col">
             <div className="border-b border-gray-200 p-4">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
@@ -48,7 +49,7 @@ const RightSide = () => {
             </div>
 
             {/* Code Editor */}
-            <div className="flex-1 bg-gray-50">
+            {/* <div className="flex-1 bg-gray-50">
                 <div className="h-full">
                     <textarea
                         value={code}
@@ -57,7 +58,8 @@ const RightSide = () => {
                         style={{ minHeight: "400px" }}
                     />
                 </div>
-            </div>
+            </div> */}
+            <div><Editor height="90vh" defaultLanguage="javascript" defaultValue="// some comment" /></div>
 
         </div>
     )
