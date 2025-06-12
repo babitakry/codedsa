@@ -1,18 +1,42 @@
+import { Link } from 'lucide-react'
 import React from 'react'
+
+import { Button } from "@/components/ui/button"
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import EditProfile from '../components/editprofile/EditProfile'
 
 const Profile = () => {
     return (
         <div className="w-[800px] mx-auto mt-10 bg-white border border-gray-300 rounded-xl shadow-sm mb-8">
-            <div className="flex items-center p-6">
-                <img
-                    src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                    alt="user"
-                    className="w-28 h-28 rounded-full border-2 border-gray-200 shadow-sm"
-                />
-                <div className="ml-6">
-                    <h1 className="text-2xl font-semibold text-gray-800">Babita Kumari</h1>
-                    <p className="text-sm text-gray-500">Competitive Programmer | Web Developer</p>
+            <div className="flex items-center justify-between p-6">
+                <div className="flex items-center">
+                    <img
+                        src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
+                        alt="user"
+                        className="w-28 h-28 rounded-full border-2 border-gray-200 shadow-sm"
+                    />
+                    <div className="ml-6">
+                        <h1 className="text-2xl font-semibold text-gray-800">Babita Kumari</h1>
+                        <p className="text-sm text-gray-500">Competitive Programmer | Web Developer</p>
+                    </div>
                 </div>
+                <Dialog>
+                    <form>
+                        <DialogTrigger asChild>
+                            <Button variant="">Edit Profile</Button>
+                        </DialogTrigger>
+                        <EditProfile />
+                    </form>
+                </Dialog>
             </div>
 
             <div className="border-t border-gray-200 px-6 py-4 grid grid-cols-3 gap-4">
@@ -52,14 +76,15 @@ const Profile = () => {
                 </div>
                 <div>
                     <p className="text-sm text-gray-500">Codeforces</p>
-                    <a
+                    <Link
+                        to={""}
                         href="https://codeforces.com/profile/your-codeforces-handle"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-purple-700 hover:underline"
                     >
                         codeforces.com/profile/your-codeforces-handle
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>
