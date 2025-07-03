@@ -14,8 +14,9 @@ const exampleSchema = new mongoose.Schema({
 const problemSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
-    },            // name/title of the problem
+        required: true,
+        unique: true
+    },  
     difficulty: {
         type: String,
         enum: ['Easy', 'Medium', 'Hard'],
