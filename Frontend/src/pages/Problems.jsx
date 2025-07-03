@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import Question from '../components/Question/Question'
 import {
     Pagination,
@@ -9,78 +10,75 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"
-import { problems } from '../constants/data';
 
 const Problems = () => {
-    const problem_list = [
-        {
-            Q_no: 1,
-            Q_name: 'Add Two Numbers',
-            Q_level: 'Med',
-            topic: 'Linked List'
-        },
-        {
-            Q_no: 2,
-            Q_name: 'Two Sum',
-            Q_level: 'Easy',
-            topic: 'Array'
-        },
-        {
-            Q_no: 3,
-            Q_name: 'Longest Substring Without Repeating Characters',
-            Q_level: 'Med', topic: 'Sliding Window'
-        },
-        {
-            Q_no: 4,
-            Q_name: 'Median of Two Sorted Arrays',
-            Q_level: 'Hard', topic: 'Binary Search'
-        },
-        {
-            Q_no: 5,
-            Q_name: 'Longest Palindromic Substring',
-            Q_level: 'Med',
-            topic: 'Dynamic Programming'
-        },
-        {
-            Q_no: 6,
-            Q_name: 'Reverse Integer',
-            Q_level: 'Med',
-            topic: 'Math'
-        },
-    ];
+    const [problems, setProblems] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
+    const fetch_problem_list = async () => {
+        try {
+            const response = await axios.get("http://localhost:3000/api/v1/problems/getallproblem");
+            console.log("response", response);
+            setProblems(response.data.data); // assumes your API responds with { data: [...] }
+            setLoading(false);
+        } catch (error) {
+            console.error("Error fetching problems:", error);
+            setError(error.response?.data?.error || error.message);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetch_problem_list();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-lg">Loading problems...</p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-lg text-red-500">Error: {error}</p>
+            </div>
+        );
+    }
 
     return (
         <div className='max-w-6xl mx-auto min-h-screen'>
-            <h2 className='text-4xl text-center font-semibold text-primary mt-10 '>Problems List</h2>
+            <h2 className='text-4xl text-center font-semibold text-primary mt-10'>Problems List</h2>
             <div className='mt-4'>
                 {problems.map((problem, ind) => (
                     <Question
                         index={ind}
-                        key={problem.Q_no}
+                        key={problem._id} // prefer _id from MongoDB
                         problem={problem}
                     />
                 ))}
             </div>
             <div className='mt-4'>
-            <Pagination>
-                <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious href="#" />
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationLink href="#">1</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationEllipsis />
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationNext href="#" />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
+                <Pagination>
+                    <PaginationContent>
+                        <PaginationItem>
+                            <PaginationPrevious href="#" />
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationLink href="#">1</PaginationLink>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationEllipsis />
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationNext href="#" />
+                        </PaginationItem>
+                    </PaginationContent>
+                </Pagination>
             </div>
-
         </div>
     );
 };
