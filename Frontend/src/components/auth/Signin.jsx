@@ -20,7 +20,7 @@ const Signin = () => {
         try {
             const response = await axios({
                 method: "POST",
-                url:"http://127.0.0.1:8000/signin",
+                url:"http://localhost:3000/api/v1/auth/login",
                 data:{
                     username: username,
                     password: password

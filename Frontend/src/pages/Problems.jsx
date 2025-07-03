@@ -9,6 +9,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"
+import { problems } from '../constants/data';
 
 const Problems = () => {
     const problem_list = [
@@ -53,7 +54,7 @@ const Problems = () => {
         <div className='max-w-6xl mx-auto min-h-screen'>
             <h2 className='text-4xl text-center font-semibold text-primary mt-10 '>Problems List</h2>
             <div className='mt-4'>
-                {problem_list.map((problem, ind) => (
+                {problems.map((problem, ind) => (
                     <Question
                         index={ind}
                         key={problem.Q_no}
