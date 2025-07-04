@@ -27,7 +27,7 @@ export const LeftSide = ({ activeTab, setActiveTab, problem }) => {
         <div className="space-y-8">
           {/* Title and Tags */}
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-3">1. {problem.title}</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-3"><span>{problem.sno}</span> {problem.title}</h1>
             <div className="flex items-center space-x-3">
               {problem.difficulty && (
                 <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">{problem.difficulty}</span>

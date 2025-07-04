@@ -54,7 +54,7 @@ const QuestionDescription = () => {
                         <ResizablePanel defaultSize={75}>
                             <div className="flex h-full w-full items-center justify-center">
                                 {/* Right Panel - Code Editor */}
-                                <RightSide />
+                                <RightSide initialCode = {problem?.boiler_plate_code}/>
                             </div>
                         </ResizablePanel>
                         <ResizableHandle withHandle/>

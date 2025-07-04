@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Editor from '@monaco-editor/react';
 import React from 'react'
 import {
@@ -9,14 +9,17 @@ import {
 } from "lucide-react"
 import axios from "axios";
 
-const RightSide = () => {
-    const [language, setLanguage] = useState("C++")
-    const [code, setCode] = useState(`class Solution {
-  public:
-      vector<int> twoSum(vector<int>& nums, int target) {
-          
-      }
-  };`)
+const RightSide = ({ initialCode }) => {
+    console.log("InitialCode: ", initialCode);
+    const [language, setLanguage] = useState("C++");
+    const [code, setCode] = useState("");
+
+    useEffect(() => {
+        if (initialCode) {
+            setCode(initialCode);
+        }
+    }, [initialCode]); 
+
 
     const executeCode = async () => {
         const res = await axios({
