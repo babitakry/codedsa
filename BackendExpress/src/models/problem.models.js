@@ -12,6 +12,11 @@ const exampleSchema = new mongoose.Schema({
 });
 
 const problemSchema = new mongoose.Schema({
+    sno: {
+        type: Number,
+        required: true,
+        unique: true
+    },
     title: {
         type: String,
         required: true,

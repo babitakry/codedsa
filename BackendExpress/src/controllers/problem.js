@@ -5,6 +5,7 @@ export const createProblem = async (req, res) => {
 
     try {
         const {
+            sno,
             title,
             difficulty,
             topic,
@@ -16,7 +17,7 @@ export const createProblem = async (req, res) => {
         } = req.body;
 
 
-        if (!title || !difficulty || !topic || !description || !constraints || !examples || !test_case || !boiler_plate_code) {
+        if (!sno || !title || !difficulty || !topic || !description || !constraints || !examples || !test_case || !boiler_plate_code) {
             return res.status(400).json({ error: "All fields are required" });
         }
 
@@ -71,11 +72,11 @@ export const getProblemById = async (req, res) => {
         error: err.message
       });
     }
-  };
+};
   
   
 
-  export const getAllProblems = async (req, res) => {
+export const getAllProblems = async (req, res) => {
     try {
       const problems = await Problem.find({});
       return res.status(200).json({
@@ -91,4 +92,4 @@ export const getProblemById = async (req, res) => {
         error: err.message
       });
     }
-  };
+};
