@@ -60,7 +60,6 @@ const RightSide = () => {
 
     }
 
-    console.log("code ", code)
     return (
         <div className="w-full h-full flex flex-col">
             <div className="border-b border-gray-200 p-4">

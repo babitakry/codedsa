@@ -1,6 +1,7 @@
 import React from 'react'
 
-export const LeftSide = (activeTab, setActiveTab) => {
+export const LeftSide = ({ activeTab, setActiveTab, problem }) => {
+  console.log("Problem :", problem);
   return (
     <div className="w-full border-r border-gray-200">
       {/* Tabs */}
@@ -11,8 +12,8 @@ export const LeftSide = (activeTab, setActiveTab) => {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-4 py-3 text-sm font-medium border-b-2 ${activeTab === tab
-                  ? "border-blue-500 text-blue-600"
-                  : "border-transparent text-gray-500 hover:text-gray-700"
+                ? "border-blue-500 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-700"
                 }`}
             >
               {tab}
@@ -23,13 +24,17 @@ export const LeftSide = (activeTab, setActiveTab) => {
 
       {/* Problem Content */}
       <div className="p-6 overflow-y-auto h-[calc(100vh-120px)]">
-        <div className="space-y-6">
+        <div className="space-y-8">
           {/* Title and Tags */}
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-3">1. Two Sum</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-3">1. {problem.title}</h1>
             <div className="flex items-center space-x-3">
-              <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">Easy</span>
-              <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">Topics</span>
+              {problem.difficulty && (
+                <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">{problem.difficulty}</span>
+              )}
+              {problem.topic && (
+                <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">{problem.topic}</span>
+              )}
               <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-medium">Companies</span>
               <span className="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs font-medium">Hint</span>
             </div>
@@ -37,112 +42,57 @@ export const LeftSide = (activeTab, setActiveTab) => {
 
           {/* Problem Statement */}
           <div className="space-y-4">
-            <p className="text-gray-700">
-              Given an array of integers <code className="bg-gray-100 px-1 py-0.5 rounded text-sm">nums</code> and
-              an integer <code className="bg-gray-100 px-1 py-0.5 rounded text-sm">target</code>, return{" "}
-              <em>indices of the two numbers such that they add up to</em>{" "}
-              <code className="bg-gray-100 px-1 py-0.5 rounded text-sm">target</code>.
-            </p>
-
-            <p className="text-gray-700">
-              You may assume that each input would have <strong>exactly one solution</strong>, and you may not use
-              the <em>same</em> element twice.
-            </p>
-
-            <p className="text-gray-700">You can return the answer in any order.</p>
+            <h2 className="text-lg font-semibold text-gray-800">Problem Statement</h2>
+            <p className="text-gray-700 whitespace-pre-line">{problem.description}</p>
           </div>
 
           {/* Examples */}
-          <div className="space-y-6">
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-3">Example 1:</h3>
-              <div className="bg-gray-50 p-4 rounded-lg space-y-2">
-                <div>
-                  <strong>Input:</strong> nums = [2,7,11,15], target = 9
+          <div className="space-y-4">
+            <h2 className="text-lg font-semibold text-gray-800">Examples</h2>
+            {problem?.examples?.length > 0 ? (
+              problem.examples.map((ex, idx) => (
+                <div
+                  key={ex._id || idx}
+                  className="bg-gray-50 border border-gray-200 p-4 rounded space-y-2 shadow-sm"
+                >
+                  <p className="text-sm text-gray-500 font-medium">Example {idx + 1}</p>
+                  <div>
+                    <p className="font-semibold text-gray-700">Input:</p>
+                    <pre className="bg-gray-100 text-gray-800 p-2 rounded font-mono overflow-x-auto">{ex.input}</pre>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-700">Output:</p>
+                    <pre className="bg-gray-100 text-gray-800 p-2 rounded font-mono overflow-x-auto">{ex.output}</pre>
+                  </div>
                 </div>
-                <div>
-                  <strong>Output:</strong> [0,1]
-                </div>
-                <div>
-                  <strong>Explanation:</strong> Because nums[0] + nums[1] == 9, we return [0, 1].
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-3">Example 2:</h3>
-              <div className="bg-gray-50 p-4 rounded-lg space-y-2">
-                <div>
-                  <strong>Input:</strong> nums = [3,2,4], target = 6
-                </div>
-                <div>
-                  <strong>Output:</strong> [1,2]
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-3">Example 3:</h3>
-              <div className="bg-gray-50 p-4 rounded-lg space-y-2">
-                <div>
-                  <strong>Input:</strong> nums = [3,3], target = 6
-                </div>
-                <div>
-                  <strong>Output:</strong> [0,1]
-                </div>
-              </div>
-            </div>
+              ))
+            ) : (
+              <p className="text-gray-500">No examples available.</p>
+            )}
           </div>
 
           {/* Constraints */}
-          <div>
-            <h3 className="font-semibold text-gray-900 mb-3">Constraints:</h3>
-            <ul className="space-y-1 text-gray-700">
-              <li>• 2 ≤ nums.length ≤ 10⁴</li>
-              <li>• -10⁹ ≤ nums[i] ≤ 10⁹</li>
-              <li>• -10⁹ ≤ target ≤ 10⁹</li>
-              <li>
-                • <strong>Only one valid answer exists.</strong>
-              </li>
-            </ul>
-          </div>
-
-          {/* Follow-up */}
-          <div>
-            <p className="text-gray-700">
-              <strong>Follow-up:</strong> Can you come up with an algorithm that is less than{" "}
-              <code className="bg-gray-100 px-1 py-0.5 rounded text-sm">O(n²)</code> time complexity?
-            </p>
-          </div>
-
-          {/* Stats */}
-          <div className="border-t pt-6 space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-sm text-gray-500">Accepted</span>
-                <div className="font-semibold">17,382,815</div>
-                <span className="text-xs text-gray-400">61.2M</span>
-              </div>
-              <div>
-                <span className="text-sm text-gray-500">Acceptance Rate</span>
-                <div className="font-semibold">55.7%</div>
+          {problem.constraints && (
+            <div className="space-y-2">
+              <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-3-3v6m9-9a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Constraints
+              </h2>
+              <div className="bg-gray-50 border border-gray-200 p-4 rounded shadow-sm overflow-x-auto max-h-60">
+                <div className="text-gray-800 font-mono whitespace-pre-wrap">
+                  {
+                  problem.constraints?.map((constraint, idx) => {
+                    return (
+                      <p>{constraint}</p>
+                    )
+                  })
+                  }
+                  </div>
               </div>
             </div>
-
-            {/* Topics */}
-            <div className="pt-4">
-              <button className="text-sm text-blue-600 hover:text-blue-800">Topics</button>
-            </div>
-
-            {/* Online Status */}
-            <div className="flex items-center justify-between pt-4 text-sm">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span className="text-gray-600">2166 Online</span>
-              </div>
-
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
