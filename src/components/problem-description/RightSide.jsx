@@ -11,12 +11,12 @@ import axios from "axios";
 
 const RightSide = ({ initialCode }) => {
     console.log("InitialCode: ", initialCode);
-    const [language, setLanguage] = useState("C++");
+    const [language, setLanguage] = useState(initialCode && initialCode[0]?.lang);
     const [code, setCode] = useState("");
 
     useEffect(() => {
         if (initialCode) {
-            setCode(initialCode);
+            setCode(initialCode[0]?.code);
         }
     }, [initialCode]); 
 
@@ -60,7 +60,18 @@ const RightSide = ({ initialCode }) => {
         })
 
         console.log("response", res.data)
+    }
 
+    const changeLanguage= (e)=>{
+        const lang = e.target.value;
+        setLanguage(lang);
+
+        for(let i=0;i<initialCode.length ;i++){
+            if(initialCode[i]?.lang===lang){
+                // console.log("infdafsdf", initialCode[i]);
+                setCode(initialCode[i]?.code);
+            }
+        }
     }
 
     return (
@@ -70,13 +81,16 @@ const RightSide = ({ initialCode }) => {
                     <div className="flex items-center space-x-4">
                         <select
                             value={language}
-                            onChange={(e) => setLanguage(e.target.value)}
+                            onChange={changeLanguage}
                             className="border border-gray-300 rounded px-3 py-1 text-sm"
                         >
-                            <option>C++</option>
-                            <option>Java</option>
-                            <option>Python</option>
-                            <option>JavaScript</option>
+                            {
+                                initialCode && initialCode?.map((obj,ind)=>{
+                                    return (
+                                        <option>{obj.lang}</option>
+                                    )
+                                })
+                            }
                         </select>
                         <span className="text-sm text-gray-600">Auto</span>
                     </div>
@@ -99,7 +113,7 @@ const RightSide = ({ initialCode }) => {
                 <Editor
                     height="90vh"
                     defaultLanguage="cpp"
-                    defaultValue={code}
+                    value={code}
                     onChange={(value) => setCode(value)}
                 />
 
