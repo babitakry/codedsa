@@ -40,7 +40,7 @@ const Signup = () => {
             }
 
         }
-        setIsSignuping(false)
+        setIsSignuping(false);
 
     }
 
