@@ -32,8 +32,12 @@ const userSchema = new mongoose.Schema({
   },
   social_links: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "SocialLink",
+      platform: {
+        type: String
+      },
+      url: {
+        type: String
+      }
     }
   ],
   skills: {

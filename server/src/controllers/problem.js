@@ -43,8 +43,6 @@ export const createProblem = async (req, res) => {
     }
 }
 
-
-
 export const getProblemById = async (req, res) => {
     try {
       const { id } = req.params;
@@ -74,8 +72,6 @@ export const getProblemById = async (req, res) => {
     }
 };
   
-  
-
 export const getAllProblems = async (req, res) => {
     try {
       const problems = await Problem.find({});
