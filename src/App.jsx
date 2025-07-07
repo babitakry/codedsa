@@ -9,6 +9,7 @@ import QuestionDescription from './pages/QuestionDescription';
 import Profile from './pages/Profile';
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
+import AdminUsers from './components/admin/AdminUsers';
 
 function App() {
   return (
@@ -27,9 +28,9 @@ function App() {
         <Route path='/admin' element={
           <SidebarProvider>
           <AppSidebar />
-          <main>
+          <main className='flex w-full'>
             <SidebarTrigger />
-            {/* <App /> */}
+            <AdminUsers/>
           </main>
         </SidebarProvider>
         }>
