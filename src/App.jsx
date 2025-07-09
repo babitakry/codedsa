@@ -9,9 +9,26 @@ import QuestionDescription from './pages/QuestionDescription';
 import Profile from './pages/Profile';
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
-import AdminUsers from './components/admin/AdminUsers';
 import AdminProblems from './components/admin/AdminProblems';
-import AdminAddProblem from './components/admin/AdminAddProblem';
+import AdminUsers from './components/admin/AdminUsers';
+
+// Admin layout with sidebar
+const AdminLayout = () => {
+  return (
+    <SidebarProvider>
+      <div className="w-full flex">
+        <AppSidebar />
+        <main className="flex-1 p-4">
+          <SidebarTrigger/>
+          <Routes>
+            <Route path="users" element={<AdminUsers/>} />
+            <Route path="problems" element={<AdminProblems />} />
+          </Routes>
+        </main>
+      </div>
+    </SidebarProvider>
+  );
+};
 
 function App() {
   return (
@@ -19,25 +36,15 @@ function App() {
       {/* <Navbar /> */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup/>}/>
-        <Route path="/signin" element={<Signin/>}/>
-        <Route path="/profile" element={<Profile/>}/>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/problems">
-          <Route path='' element={<Problems/>}/>
-          <Route path=':name' element={<QuestionDescription />}/>
+          <Route index element={<Problems />} />
+          <Route path=":name" element={<QuestionDescription />} />
         </Route>
 
-        <Route path='/admin' element={
-          <SidebarProvider>
-          <AppSidebar />
-          <main className='flex w-full'>
-            <SidebarTrigger />
-            <AdminAddProblem/>
-          </main>
-        </SidebarProvider>
-        }>
-
-        </Route>
+        <Route path="/admin/*" element={<AdminLayout />} />
       </Routes>
       {/* <Footer/> */}
     </>
