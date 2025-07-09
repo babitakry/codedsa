@@ -146,3 +146,31 @@ export const updateProblem = async (req, res) => {
 };
 
 
+export const deleteProblem = async (req, res) => {
+  const params = req.params;
+  console.log("params:", params);
+  const problem_id = params?.id;
+
+  try {
+    const deletedProblem = await Problem.findByIdAndDelete(problem_id);
+
+    if (!deletedProblem) {
+      return res.status(404).json({
+        success: false,
+        message: "Problem not found"
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Problem deleted successfully",
+      data: deletedProblem
+    });
+  } catch (error) {
+    console.log("Error while deleting problem:", error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error in Deleting Problem"
+    });
+  }
+};
