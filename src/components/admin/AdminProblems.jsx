@@ -57,7 +57,7 @@ const AdminProblems = () => {
                 key={problem._id}
                 className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-indigo-50`}
               >
-                <td className="px-4 py-3">{problem.sno}</td>
+                <td className="px-4 py-3">{index + 1}</td>
                 <td className="px-4 py-3">{problem.title}</td>
                 <td className="px-4 py-3">{problem.topic}</td>
                 <td className="px-4 py-3">{problem.difficulty}</td>
