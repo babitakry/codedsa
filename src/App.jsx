@@ -11,6 +11,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import AdminUsers from './components/admin/AdminUsers';
 import AdminProblems from './components/admin/AdminProblems';
+import AdminAddProblem from './components/admin/AdminAddProblem';
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
           <AppSidebar />
           <main className='flex w-full'>
             <SidebarTrigger />
-            <AdminProblems/>
+            <AdminAddProblem/>
           </main>
         </SidebarProvider>
         }>
