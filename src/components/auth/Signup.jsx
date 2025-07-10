@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { authEndpoints } from '@/services/api';
 
 const Signup = () => {
     const [username, setUsername] = useState("");
@@ -21,7 +22,7 @@ const Signup = () => {
         try {
             const response = await axios({
                 method: "POST",
-                url: "http://localhost:3000/api/v1/auth/signup",
+                url: authEndpoints.SIGNUP_API,
                 data: {
                     username: username,
                     email: email,
