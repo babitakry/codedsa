@@ -7,7 +7,7 @@ const Signup = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [isSignuping, setIsSignuping] = useState(false)
+    const [isSignuping, setIsSignuping] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
@@ -30,6 +30,9 @@ const Signup = () => {
                 }
             });
             console.log(response);
+            if (response.status == 201) {
+                navigate("/signin");
+            }
 
         } catch (err) {
             console.log(err.response)
@@ -118,10 +121,13 @@ const Signup = () => {
                         </div> */}
                         <div className='w-full flex justify-center'>
                             <button
+                                disabled={isSignuping}
                                 type="submit"
-                                className="w-full py-2.5 px-5 text-sm text-center font-medium text-white bg-primary rounded-lg hover:bg-indigo-600"
+                                className="w-full py-2.5 px-5 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
                             >
-                                Sign up
+                                {
+                                    isSignuping ? "Signuping" : "Sign Up"
+                                }
                             </button>
                         </div>
                         <p className="text-sm text-center text-gray-500 dark:text-gray-400">

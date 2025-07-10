@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { adminEndpoints } from '@/services/api';
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/v1/users");
+      const res = await axios.get(adminEndpoints.ALL_USERS_API);
       setUsers(res.data.data);
     } catch (error) {
       console.error("Failed to fetch users", error);

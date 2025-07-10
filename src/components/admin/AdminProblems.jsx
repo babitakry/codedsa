@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { adminEndpoints, problemEndpoints } from '@/services/api';
 
 const AdminProblems = () => {
   const [problems, setProblems] = useState([]);
@@ -8,7 +9,7 @@ const AdminProblems = () => {
 
   const fetchProblems = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/v1/problems/getallproblem");
+      const res = await axios.get(problemEndpoints.GET_ALL_PROBLEM);
       setProblems(res.data.data);
     } catch (err) {
       console.error("Error fetching problems:", err);
@@ -17,7 +18,7 @@ const AdminProblems = () => {
 
   const deleteProblem = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/v1/problems/deleteproblem/${id}`);
+      await axios.delete(problemEndpoints.DELETE_PROBLEM(id));
       setProblems(problems.filter(p => p._id !== id));
     } catch (err) {
       console.error("Error deleting problem:", err);

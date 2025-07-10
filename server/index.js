@@ -30,7 +30,7 @@ db_connection();
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/problems", problemRouter);
 app.use("/api/v1/user", userRouter);
-app.use("/api/v1", adminUserRoutes);
+app.use("/api/v1/admin", adminUserRoutes);
 
 app.listen(port, ()=>{
     console.log(`project is running on http://localhost:${port}`);

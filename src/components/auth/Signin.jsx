@@ -36,10 +36,10 @@ const Signin = () => {
             setError(err?.response?.data?.detail);
             if(err.response.status == 404){
                 // Redirect to Sign Up page
-                navigate("/signup")
+                navigate("/signup");
             }
           }
-        setIsSigning(false)
+        setIsSigning(false);
 
     }
     return (
