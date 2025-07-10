@@ -12,7 +12,10 @@ const port = process.env.PORT;
 
 //Frontend is connected to Backend
 app.use(cors({
-    origin: "http://localhost:5173", // your frontend URL
+    origin: [
+        "http://localhost:5173",
+        "https://codedsa-eta.vercel.app"
+    ], // your frontend URL
     credentials: true,
   }));
   
