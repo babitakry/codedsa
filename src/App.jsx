@@ -11,6 +11,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import AdminProblems from './components/admin/AdminProblems';
 import AdminUsers from './components/admin/AdminUsers';
+import AdminAddProblem from './components/admin/AdminAddProblem';
 
 // Admin layout with sidebar
 const AdminLayout = () => {
@@ -23,6 +24,7 @@ const AdminLayout = () => {
           <Routes>
             <Route path="users" element={<AdminUsers/>} />
             <Route path="problems" element={<AdminProblems />} />
+            <Route path="problems/add" element={<AdminAddProblem/>}/>
           </Routes>
         </main>
       </div>
