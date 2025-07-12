@@ -35,7 +35,7 @@ const AdminLayout = () => {
 function App() {
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
@@ -48,7 +48,7 @@ function App() {
 
         <Route path="/admin/*" element={<AdminLayout />} />
       </Routes>
-      {/* <Footer/> */}
+      <Footer/>
     </>
   )
 }

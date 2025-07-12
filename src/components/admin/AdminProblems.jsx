@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { adminEndpoints, problemEndpoints } from '@/services/api';
+import { problemEndpoints } from '@/services/api';
+import TableRow from '../table/TableRow';
 
 const AdminProblems = () => {
   const [problems, setProblems] = useState([]);
   const navigate = useNavigate();
+  const [refreshProblem, setRefreshProblem] = useState(false);
 
   const fetchProblems = async () => {
     try {
@@ -16,18 +18,9 @@ const AdminProblems = () => {
     }
   };
 
-  const deleteProblem = async (id) => {
-    try {
-      await axios.delete(problemEndpoints.DELETE_PROBLEM(id));
-      setProblems(problems.filter(p => p._id !== id));
-    } catch (err) {
-      console.error("Error deleting problem:", err);
-    }
-  };
-
   useEffect(() => {
     fetchProblems();
-  }, []);
+  }, [refreshProblem]);
 
   return (
     <div className="w-full p-6 bg-gray-100 min-h-screen">
@@ -54,29 +47,7 @@ const AdminProblems = () => {
           </thead>
           <tbody className="divide-y divide-gray-100">
             {problems.map((problem, index) => (
-              <tr
-                key={problem._id}
-                className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-indigo-50`}
-              >
-                <td className="px-4 py-3">{index+1}</td>
-                <td className="px-4 py-3">{problem.title}</td>
-                <td className="px-4 py-3">{problem.topic}</td>
-                <td className="px-4 py-3">{problem.difficulty}</td>
-                <td className="px-4 py-3 space-x-2">
-                  <button
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded"
-                    onClick={() => navigate(`/admin/problems/update/${problem._id}`)}
-                  >
-                    Update
-                  </button>
-                  <button
-                    className="bg-red-600 hover:bg-red-700 text-white py-1 px-3 rounded"
-                    onClick={() => deleteProblem(problem._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
+              <TableRow problem={problem} index={index} setRefreshProblem={setRefreshProblem}/>
             ))}
             {problems.length === 0 && (
               <tr>
