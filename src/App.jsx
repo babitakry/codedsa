@@ -1,6 +1,6 @@
 import Signin from './components/auth/Signin'
 import Signup from './components/auth/Signup'
-import { Routes, Route } from "react-router";
+import { Routes, Route, useLocation } from "react-router";
 import Home from './pages/Home';
 import Problems from './pages/Problems';
 import Navbar from './components/ui/Navbar';
@@ -33,9 +33,13 @@ const AdminLayout = () => {
 };
 
 function App() {
+  const location = useLocation();
+  console.log("location", location)
   return (
     <>
-      <Navbar />
+      {
+        location?.pathname!=="/admin" && !location.pathname.startsWith("/problems/") && <Navbar />
+      }
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
@@ -48,7 +52,9 @@ function App() {
 
         <Route path="/admin/*" element={<AdminLayout />} />
       </Routes>
-      <Footer/>
+      {
+        location?.pathname!=="/admin" && !location.pathname.startsWith("/problems/") && <Footer />
+      }
     </>
   )
 }
