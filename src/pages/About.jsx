@@ -25,7 +25,7 @@ export default function About() {
         </div>
         <div className="mt-12 flex justify-center">
           <img
-            src="/placeholder.svg?height=450&width=800"
+            src="https://cdn.dribbble.com/userupload/23767519/file/original-77c50c1cc3f9e2d5d0832fddd9616a11.gif?height=450&width=800"
             width={800}
             height={450}
             alt="CodeDSA platform overview"
@@ -171,7 +171,7 @@ export default function About() {
         </div>
         <div className="w-full md:w-1/2 flex justify-center items-center">
           <img
-            src="/placeholder.svg?height=400&width=600"
+            src="https://cdn.dribbble.com/userupload/23767519/file/original-77c50c1cc3f9e2d5d0832fddd9616a11.gif?height=400&width=600"
             width={600}
             height={400}
             alt="People collaborating and learning"
