@@ -12,6 +12,7 @@ import { AppSidebar } from "@/components/app-sidebar"
 import AdminProblems from './components/admin/AdminProblems';
 import AdminUsers from './components/admin/AdminUsers';
 import AdminAddProblem from './components/admin/AdminAddProblem';
+import About from './pages/About';
 
 // Admin layout with sidebar
 const AdminLayout = () => {
@@ -42,6 +43,7 @@ function App() {
       }
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/profile" element={<Profile />} />
