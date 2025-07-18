@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/resizable"
 import { useLocation} from "react-router"
 import axios from "axios"
+import TestCase from "@/components/Question/TestCase"
 
 const QuestionDescription = () => {
     const [activeTab, setActiveTab] = useState("Description");
@@ -59,8 +60,9 @@ const QuestionDescription = () => {
                         </ResizablePanel>
                         <ResizableHandle withHandle/>
                         <ResizablePanel defaultSize={25}>
-                            <div className="flex h-full items-center justify-center">
-                                <span className="font-semibold">Three</span>
+                            <div className="w-full p-4 h-full">
+                               <TestCase examples={problem.examples} />
+
                             </div>
                         </ResizablePanel>
                     </ResizablePanelGroup>

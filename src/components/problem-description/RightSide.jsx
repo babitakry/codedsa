@@ -5,7 +5,6 @@ import {
     Play,
     RotateCcw,
     Maximize2,
-    Settings
 } from "lucide-react"
 import axios from "axios";
 

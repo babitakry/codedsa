@@ -11,6 +11,18 @@ const exampleSchema = new mongoose.Schema({
     },
 });
 
+const testCaseSchema = new mongoose.Schema({
+    input: {
+      type: String,
+      required: true
+    },
+    expectedOutput: {
+      type: String,
+      required: true
+    }
+  });
+  
+
 const problemSchema = new mongoose.Schema({
     sno: {
         type: Number,
@@ -42,6 +54,10 @@ const problemSchema = new mongoose.Schema({
     test_case: {
         type: String,
         required: true
+    },
+    custom_test_cases: {
+        type: [testCaseSchema],
+        default: []  // Optional test cases entered by the user
     },
     constraints: { 
         type: [String], 
