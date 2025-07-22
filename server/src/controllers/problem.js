@@ -74,7 +74,22 @@ export const getProblemById = async (req, res) => {
 
 export const getAllProblems = async (req, res) => {
   try {
-    const problems = await Problem.find({});
+    const searchTerm = req.query?.searchTerm;
+
+    let problems;
+
+    if (searchTerm) {
+      // Case-insensitive search in title or description
+      const regex = new RegExp(searchTerm, 'i');
+      problems = await Problem.find({
+        $or: [
+          { title: { $regex: regex } },
+          { description: { $regex: regex } }
+        ]
+      });
+    } else {
+      problems = await Problem.find({});
+    }
     return res.status(200).json({
       success: true,
       message: `Problem list`,
