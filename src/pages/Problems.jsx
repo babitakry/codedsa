@@ -14,6 +14,7 @@ import {
 const Problems = () => {
   const [problems, setProblems] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortLevel, setSortLevel] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -23,7 +24,8 @@ const Problems = () => {
         method: "GET",
         url: "http://localhost:3000/api/v1/problems/getallproblem",
         params: {
-            searchTerm: searchTerm
+          searchTerm: searchTerm,
+          sortLevel: sortLevel
         }
       });
       setProblems(response.data.data);
@@ -37,7 +39,8 @@ const Problems = () => {
 
   useEffect(() => {
     fetch_problem_list();
-  }, [searchTerm]);
+  }, [searchTerm, sortLevel]);
+  
 
   if (loading) {
     return (
@@ -68,6 +71,17 @@ const Problems = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           className='border border-gray-300 rounded px-4 py-2 w-full max-w-md focus:outline-none focus:ring-2 focus:ring-indigo-500'
         />
+
+        <select
+          value={sortLevel}
+          onChange={(e) => setSortLevel(e.target.value)}
+          className='border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+        >
+          <option value=''>Sort by Level</option>
+          <option value='Easy'>Easy</option>
+          <option value='Medium'>Medium</option>
+          <option value='Hard'>Hard</option>
+        </select>
       </div>
 
       {/* 🧠 Problems List */}
