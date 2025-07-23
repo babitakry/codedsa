@@ -74,25 +74,29 @@ export const getProblemById = async (req, res) => {
 
 export const getAllProblems = async (req, res) => {
   try {
-    const searchTerm = req.query?.searchTerm;
+    const { searchTerm, sortLevel } = req.query;
 
-    let problems;
+    let filter = {};
 
+    //Case-insensitive search by title or description
     if (searchTerm) {
-      // Case-insensitive search in title or description
       const regex = new RegExp(searchTerm, 'i');
-      problems = await Problem.find({
-        $or: [
-          { title: { $regex: regex } },
-          { description: { $regex: regex } }
-        ]
-      });
-    } else {
-      problems = await Problem.find({});
+      filter.$or = [
+        { title: { $regex: regex } },
+        { description: { $regex: regex } }
+      ];
     }
+
+    // Filter by difficulty level if provided
+    if (sortLevel) {
+      filter.difficulty = sortLevel; // Assuming your DB field is "difficulty"
+    }
+
+    const problems = await Problem.find(filter);
+
     return res.status(200).json({
       success: true,
-      message: `Problem list`,
+      message: "Problem list",
       data: problems
     });
   } catch (err) {
@@ -104,7 +108,6 @@ export const getAllProblems = async (req, res) => {
     });
   }
 };
-
 
 export const updateProblem = async (req, res) => {
   const data = req.body;
