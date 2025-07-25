@@ -63,7 +63,7 @@ const Problems = () => {
       <h2 className='text-4xl text-center font-semibold text-primary mt-10'>Problems List</h2>
 
       {/* 🔍 Search Input */}
-      <div className='flex justify-center mt-6 mb-4'>
+      <div className='flex justify-center mt-6 mb-4 gap-8'>
         <input
           type='text'
           placeholder='Search problem by title...'
