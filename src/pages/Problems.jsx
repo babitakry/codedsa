@@ -10,6 +10,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { problemEndpoints } from '@/services/api';
 
 const Problems = () => {
   const [problems, setProblems] = useState([]);
@@ -22,7 +23,7 @@ const Problems = () => {
     try {
       const response = await axios({
         method: "GET",
-        url: "http://localhost:3000/api/v1/problems/getallproblem",
+        url: problemEndpoints.GET_ALL_PROBLEM,
         params: {
           searchTerm: searchTerm,
           sortLevel: sortLevel
