@@ -61,7 +61,7 @@ const Problems = () => {
 
   return (
     <div className='max-w-6xl mx-auto min-h-screen'>
-      <h2 className='text-4xl text-center font-semibold text-primary mt-10'>Problems List</h2>
+      <h2 className='text-4xl text-center font-semibold text-black underline italic mt-10'>Problems List</h2>
 
       {/* 🔍 Search Input */}
       <div className='flex justify-center mt-6 mb-4 gap-8'>
