@@ -17,15 +17,14 @@ const QuestionDescription = () => {
     const [problem, setProblem] = useState({});
     const problemId = useLocation()?.state;
     console.log("prolem id", problemId);
-    // .get(`http://localhost:3000/api/v1/problems/getproblem/${problemId}`);
 
     const fetch_problem = async () => {
         try {
             const response = await axios({
                 method: "GET",
                 url: problemEndpoints.GET_PROBLEM_BY_ID(problemId)
-            })
-            console.log("Response", response);
+            });
+            // console.log("Response", response);
             setProblem(response.data.data);
             console.log("Problems in QuestionDesc", response.data.data);
         }

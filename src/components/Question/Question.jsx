@@ -23,7 +23,19 @@ const Question = ({ problem, index }) => {
       </div>
 
       <div className="flex items-center space-x-4">
-        <p className="">{problem?.difficulty}</p>
+        <p
+          className={`font-semibold ${problem?.difficulty === 'Easy'
+                ? 'text-green-500'
+                : problem?.difficulty === 'Medium'
+                ? 'text-yellow-500'
+                : problem?.difficulty === 'Hard'
+                ? 'text-red-500'
+                : 'text-gray-500'
+            }`}
+        >
+          {problem?.difficulty}
+        </p>
+
         <button
           onClick={() => handleNavigate(problem?.title, problem?._id)}
           className="px-3 py-1 rounded-md text-sm bg-blue-500 text-white hover:bg-blue-600 transition">
