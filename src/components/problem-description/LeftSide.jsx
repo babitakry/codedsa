@@ -4,10 +4,9 @@ export const LeftSide = ({ activeTab, setActiveTab, problem }) => {
   // console.log("Problem :", problem);
   return (
     <div className="w-full border-r border-gray-200">
-      {/* Tabs */}
       <div className="border-b border-gray-200">
         <div className="flex">
-          {["Description", "Editorial", "Solutions", "Submissions"].map((tab) => (
+          {["Description", "Editorial", "Solutions", "Submissions"].map((tab, idx) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -25,7 +24,6 @@ export const LeftSide = ({ activeTab, setActiveTab, problem }) => {
       {/* Problem Content */}
       <div className="p-6 overflow-y-auto h-[calc(100vh-120px)]">
         <div className="space-y-8">
-          {/* Title and Tags */}
           <div>
             <h1 className="text-2xl font-bold text-gray-900 mb-3"><span>{problem.sno}.</span> {problem.title}</h1>
             <div className="flex items-center space-x-3">
@@ -85,7 +83,7 @@ export const LeftSide = ({ activeTab, setActiveTab, problem }) => {
                   {
                   problem.constraints?.map((constraint, idx) => {
                     return (
-                      <p>{constraint}</p>
+                      <p key={idx}>{constraint}</p>
                     )
                   })
                   }

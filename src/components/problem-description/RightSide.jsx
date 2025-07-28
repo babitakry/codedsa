@@ -86,7 +86,7 @@ const RightSide = ({ initialCode }) => {
                             {
                                 initialCode && initialCode?.map((obj,ind)=>{
                                     return (
-                                        <option>{obj.lang}</option>
+                                        <option key={ind}>{obj.lang}</option>
                                     )
                                 })
                             }
