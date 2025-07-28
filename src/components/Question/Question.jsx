@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router'
 
 
 const Question = ({ problem, index }) => {
-  console.log(problem)
+  // console.log(problem)
   const navigate = useNavigate();
 
   const handleNavigate = (title, problemId) => {

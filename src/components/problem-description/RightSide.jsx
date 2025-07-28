@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 
 const RightSide = ({ initialCode }) => {
-    console.log("InitialCode: ", initialCode);
+    // console.log("InitialCode: ", initialCode);
     const [language, setLanguage] = useState(initialCode && initialCode[0]?.lang);
     const [code, setCode] = useState("");
 

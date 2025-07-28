@@ -13,6 +13,7 @@ import AdminProblems from './components/admin/AdminProblems';
 import AdminUsers from './components/admin/AdminUsers';
 import AdminAddProblem from './components/admin/AdminAddProblem';
 import About from './pages/About';
+import { Header } from './components/problem-description/Header';
 
 // Admin layout with sidebar
 const AdminLayout = () => {
@@ -35,7 +36,7 @@ const AdminLayout = () => {
 
 function App() {
   const location = useLocation();
-  console.log("location", location)
+  // console.log("location", location);
   return (
     <>
       {
@@ -50,6 +51,8 @@ function App() {
         <Route path="/problems">
           <Route index element={<Problems />} />
           <Route path=":name" element={<QuestionDescription />} />
+          <Route path=":slug" element={<Header/>} />
+
         </Route>
 
         <Route path="/admin/*" element={<AdminLayout />} />

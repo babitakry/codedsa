@@ -16,7 +16,7 @@ const QuestionDescription = () => {
     const [activeTab, setActiveTab] = useState("Description");
     const [problem, setProblem] = useState({});
     const problemId = useLocation()?.state;
-    console.log("prolem id", problemId);
+    // console.log("prolem id", problemId);
 
     const fetch_problem = async () => {
         try {
@@ -26,7 +26,7 @@ const QuestionDescription = () => {
             });
             // console.log("Response", response);
             setProblem(response.data.data);
-            console.log("Problems in QuestionDesc", response.data.data);
+            // console.log("Problems in QuestionDesc", response.data.data);
         }
         catch (error) {
             console.error("Error fetching problem by Id:", error);

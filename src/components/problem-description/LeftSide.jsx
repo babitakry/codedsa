@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const LeftSide = ({ activeTab, setActiveTab, problem }) => {
-  console.log("Problem :", problem);
+  // console.log("Problem :", problem);
   return (
     <div className="w-full border-r border-gray-200">
       {/* Tabs */}
