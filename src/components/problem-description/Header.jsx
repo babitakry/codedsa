@@ -10,7 +10,10 @@ export const Header = () => {
     const navigate = useNavigate();
 
     const handleNavigate = (title, problemId) => {
-        navigate(`/problems/${problemId}`);
+        setShowSidebar(false);
+        navigate(`/problems/${title}`, {
+            state: problemId
+          })
     };
 
 
