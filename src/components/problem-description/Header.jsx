@@ -13,7 +13,7 @@ export const Header = () => {
         setShowSidebar(false);
         navigate(`/problems/${title}`, {
             state: problemId
-          })
+        })
     };
 
 
@@ -34,7 +34,9 @@ export const Header = () => {
     return (
         <>
             <header className="border-b border-gray-200 px-4 py-2">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between relative">
+
+                    {/* Left Section */}
                     <div className="flex items-center space-x-4">
                         <button className="p-1 hover:bg-gray-100 rounded">
                             <ChevronLeft className="w-5 h-5" />
@@ -54,10 +56,18 @@ export const Header = () => {
                         </button>
                     </div>
 
-                    <div className="flex items-center space-x-4">
+                    {/* Center Section with Run and Submit buttons */}
+                    <div className="absolute left-1/2 transform -translate-x-1/2 flex space-x-4">
+                        <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded text-sm font-medium">
+                            Run
+                        </button>
                         <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded text-sm font-medium">
                             Submit
                         </button>
+                    </div>
+
+                    {/* Right Section */}
+                    <div className="flex items-center space-x-4">
                         <button className="p-1 hover:bg-gray-100 rounded">
                             <User className="w-5 h-5" />
                         </button>
@@ -67,6 +77,8 @@ export const Header = () => {
                     </div>
                 </div>
             </header>
+
+
 
             {/* Sidebar */}
             {showSidebar && (
