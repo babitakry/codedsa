@@ -2,26 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, List, User, X } from 'lucide-react';
 import axios from 'axios';
 import { problemEndpoints } from '@/services/api';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import CodeBite from '../../assets/CodeBite.png'
 
 export const Header = () => {
     const [showSidebar, setShowSidebar] = useState(false);
     const [problem, setProblem] = useState([]);
+    const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
     const navigate = useNavigate();
-
-    const handleNavigate = (title, problemId) => {
-        setShowSidebar(false);
-        navigate(`/problems/${title}`, {
-            state: problemId
-        })
-    };
-
 
     const fetch_problem = async () => {
         try {
             const response = await axios.get(problemEndpoints.GET_ALL_PROBLEM);
             setProblem(response.data.data);
-            // console.log("Fetched Problems:", response.data.data);
         } catch (error) {
             console.error("Error fetching problems:", error);
         }
@@ -31,6 +24,31 @@ export const Header = () => {
         fetch_problem();
     }, []);
 
+    // Automatically navigate when currentProblemIndex changes
+    useEffect(() => {
+        if (problem.length > 0) {
+            const current = problem[currentProblemIndex];
+            navigate(`/problems/${current.title}`, {
+                state: current._id
+            });
+        }
+    }, [currentProblemIndex, problem, navigate]);
+
+    const handleNavigate = (title, problemId) => {
+        setShowSidebar(false);
+        navigate(`/problems/${title}`, {
+            state: problemId
+        });
+    };
+
+    const handlePrevProblem = () => {
+        setCurrentProblemIndex((prev) => Math.max(0, prev - 1));
+    };
+
+    const handleNextProblem = () => {
+        setCurrentProblemIndex((prev) => Math.min(problem.length - 1, prev + 1));
+    };
+
     return (
         <>
             <header className="border-b border-gray-200 px-4 py-2">
@@ -38,9 +56,9 @@ export const Header = () => {
 
                     {/* Left Section */}
                     <div className="flex items-center space-x-4">
-                        <button className="p-1 hover:bg-gray-100 rounded">
-                            <ChevronLeft className="w-5 h-5" />
-                        </button>
+                        <Link to="/" className="flex items-center space-x-2">
+                            <img src={CodeBite} className="h-8 rounded-full" alt="Logo" />
+                        </Link>
                         <button
                             className="flex items-center space-x-2 px-3 py-1 hover:bg-gray-100 rounded"
                             onClick={() => setShowSidebar(true)}
@@ -48,10 +66,10 @@ export const Header = () => {
                             <List className="w-4 h-4" />
                             <span className="text-sm font-medium">Problem List</span>
                         </button>
-                        <button className="p-1 hover:bg-gray-100 rounded">
+                        <button className="p-1 hover:bg-gray-100 rounded" onClick={handlePrevProblem} disabled={currentProblemIndex === 0}>
                             <ChevronLeft className="w-5 h-5" />
                         </button>
-                        <button className="p-1 hover:bg-gray-100 rounded">
+                        <button className="p-1 hover:bg-gray-100 rounded" onClick={handleNextProblem} disabled={currentProblemIndex === problem.length - 1}>
                             <ChevronRight className="w-5 h-5" />
                         </button>
                     </div>
@@ -77,8 +95,6 @@ export const Header = () => {
                     </div>
                 </div>
             </header>
-
-
 
             {/* Sidebar */}
             {showSidebar && (
@@ -127,7 +143,6 @@ export const Header = () => {
                                 </li>
                             ))}
                         </ul>
-
                     </div>
                 </div>
             )}
