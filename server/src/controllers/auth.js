@@ -86,8 +86,10 @@ export const loginController = async (req, res) => {
         // create a JWT token
         const payload = {
             user_id: user_exist._id,
-            email: user_exist.email
+            email: user_exist.email,
+            role: user_exist.role //  make sure your User model has a `role` field
         };
+        
 
         const jwtdata = jwt.sign(
             {
