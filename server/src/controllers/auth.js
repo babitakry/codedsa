@@ -94,6 +94,7 @@ export const loginController = async (req, res) => {
                 exp: Math.floor(Date.now() / 1000) + 60 * 60, // 1 hour expiry
                 data: payload
             },
+            // process.env.JWT_SECRET
             process.env.JWT_SECRET
         );
 
@@ -110,6 +111,36 @@ export const loginController = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Internal Server Error in login process"
+        });
+    }
+};
+
+export const verifyTokenController = async ( req, res) => {
+    try{
+        const user_id = req.user.data.user_id;
+        if(!user_id){
+            return res.status(404).json({
+                success: false,
+                message: "Missing user id"
+            });
+        }
+        const userExist = User.findById(user_id);
+        if(!userExist){
+            return res.status(404).json({
+                success: false,
+                message: "User Not Exist!"
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            message: "User Authentication successful"
+        })
+    }
+    catch(error){
+        console.log("VerifyTokenController", error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error to VerifyTokenController"
         });
     }
 };

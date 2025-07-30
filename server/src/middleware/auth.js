@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken"
 // creating the middleware
 export const authMiddleware = (req, res, next)=>{
     try{
-        const token = req.body?.token || req.cookies?.token || req.header("Authorization").replace("Bearer ","");
+        const token = req.body?.token || req.cookies?.token || req.header("Authorization")?.replace("Bearer ","");
 
         // validation
         if(!token){
