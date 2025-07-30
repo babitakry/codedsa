@@ -94,7 +94,6 @@ export const loginController = async (req, res) => {
                 exp: Math.floor(Date.now() / 1000) + 60 * 60, // 1 hour expiry
                 data: payload
             },
-            // process.env.JWT_SECRET
             process.env.JWT_SECRET
         );
 

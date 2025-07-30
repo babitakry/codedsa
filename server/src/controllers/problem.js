@@ -2,7 +2,6 @@ import { Problem } from "../models/problem.models.js";
 
 export const createProblem = async (req, res) => {
   const data = req.body;
-
   try {
     const {
       sno,

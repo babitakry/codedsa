@@ -5,9 +5,9 @@ export const updateuserController = async (req, res) => {
     const data = req.body;
     console.log("Data.....", data);
 
-    const params = req.params;
-    console.log("Params....", params);
-    const user_id = params?.id;
+    // const params = req.params;
+    // console.log("Params....", params);
+    const user_id = req.user.data.user_id;
 
     try {
         const { 
