@@ -3,6 +3,9 @@ import { Problem } from "../models/problem.models.js";
 export const createProblem = async (req, res) => {
   const data = req.body;
   try {
+    const adminUser = req.user; // comes from authMiddleware
+    console.log("Admin user creating problem:", adminUser);
+    
     const {
       sno,
       title,

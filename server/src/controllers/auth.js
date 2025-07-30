@@ -134,7 +134,7 @@ export const verifyTokenController = async ( req, res) => {
         }
         return res.status(200).json({
             success: true,
-            message: "User Authentication successful"
+            message: "User Authentication successful !"
         })
     }
     catch(error){
