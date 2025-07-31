@@ -63,7 +63,7 @@ const Problems = () => {
   return (
     <div className='max-w-6xl mx-auto min-h-screen'>
       <div className="max-w-4xl mx-auto pt-3">
-      {/* Page Heading */}
+    
       <h2 className="text-3xl font-bold text-gray-800 text-center mb-8 tracking-tight">Problems List</h2>
 
       {/* Search & Sort */}
@@ -102,9 +102,9 @@ const Problems = () => {
                 className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 pr-10 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all duration-200 bg-white hover:border-gray-300 appearance-none cursor-pointer"
               >
                 <option value="">All Levels</option>
-                <option value="Easy">🟢 Easy</option>
-                <option value="Medium">🟠 Medium</option>
-                <option value="Hard">🔴 Hard</option>
+                <option value="Easy"> Easy</option>
+                <option value="Medium"> Medium</option>
+                <option value="Hard"> Hard</option>
               </select>
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -125,9 +125,9 @@ const Problems = () => {
               )}
               {sortLevel && (
                 <span className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full font-medium">
-                  {sortLevel === "Easy" && "🟢"}
-                  {sortLevel === "Medium" && "🟠"}
-                  {sortLevel === "Hard" && "🔴"}
+                  {sortLevel === "Easy" }
+                  {sortLevel === "Medium"}
+                  {sortLevel === "Hard"}
                   {sortLevel}
                 </span>
               )}
