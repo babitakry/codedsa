@@ -1,110 +1,72 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Plus } from 'lucide-react';
 
-const TestCase = ({ examples = [] }) => {
-  const [activeTab, setActiveTab] = useState('case-0');
-  const [customCases, setCustomCases] = useState([]);
+const TestCase = ({ examples }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [example, setExample] = useState({});
 
-  const addCustomCase = () => {
-    const newIndex = customCases.length;
-    setCustomCases([...customCases, { input: '', output: '' }]);
-    setActiveTab(`custom-${newIndex}`);
-  };
+  const onClickTestCase = (ind) => {
+    console.log(ind, examples)
+    setActiveIndex(ind);
+    setExample(examples[ind])
+  }
 
-  const handleCustomChange = (index, field, value) => {
-    const updated = [...customCases];
-    updated[index][field] = value;
-    setCustomCases(updated);
-  };
-
-  const renderTabs = () => (
-    <div className="flex flex-wrap gap-2 mb-3">
-      {examples.map((_, idx) => (
-        <button
-          key={`case-${idx}`}
-          className={`px-3 py-1 rounded border text-sm ${
-            activeTab === `case-${idx}` ? 'bg-indigo-600 text-white' : 'bg-white text-gray-800'
-          }`}
-          onClick={() => setActiveTab(`case-${idx}`)}
-        >
-          Case {idx + 1}
-        </button>
-      ))}
-
-      {customCases.map((_, idx) => (
-        <button
-          key={`custom-${idx}`}
-          className={`px-3 py-1 rounded border text-sm ${
-            activeTab === `custom-${idx}` ? 'bg-indigo-600 text-white' : 'bg-white text-gray-800'
-          }`}
-          onClick={() => setActiveTab(`custom-${idx}`)}
-        >
-          Custom {idx + 1}
-        </button>
-      ))}
-
-      <button
-        className="px-3 py-1 rounded border text-indigo-600 border-indigo-600 hover:bg-indigo-100 text-sm"
-        onClick={addCustomCase}
-      >
-        +
-      </button>
-    </div>
-  );
-
-  const renderTestCase = () => {
-    if (activeTab.startsWith('case-')) {
-      const idx = parseInt(activeTab.split('-')[1]);
-      return (
-        <div className="grid gap-4">
-          <div>
-            <label className="text-sm font-medium text-gray-700 block mb-1">Input</label>
-            <textarea
-              value={examples[idx]?.input || ''}
-              readOnly
-              className="border rounded p-2 h-[40px] w-full text-sm"
-            />
-          </div>
-          <div>
-            <label className="text-sm font-medium text-gray-700 block mb-1">Output</label>
-            <textarea
-              value={examples[idx]?.output || ''}
-              readOnly
-              className="border rounded p-2 h-[40px] w-full text-sm"
-            />
-          </div>
-        </div>
-      );
-    } else {
-      const idx = parseInt(activeTab.split('-')[1]);
-      return (
-        <div className="grid gap-4">
-          <div>
-            <label className="text-sm font-medium text-gray-700 block mb-1">Input</label>
-            <textarea
-              value={customCases[idx]?.input}
-              onChange={(e) => handleCustomChange(idx, 'input', e.target.value)}
-              placeholder="Input"
-              className="border rounded p-2 h-[40px] w-full text-sm"
-            />
-          </div>
-          <div>
-            <label className="text-sm font-medium text-gray-700 block mb-1">Expected Output</label>
-            <textarea
-              value={customCases[idx]?.output}
-              onChange={(e) => handleCustomChange(idx, 'output', e.target.value)}
-              placeholder="Expected Output"
-              className="border rounded p-2 h-[40px] w-full text-sm"
-            />
-          </div>
-        </div>
-      );
+  console.log("exmap", example)
+  useEffect(() => {
+    if (examples?.length > 0) {
+      console.log(examples)
+      setExample(examples[0])
     }
-  };
-
+  }, [examples])
   return (
-    <div className="bg-white p-4 rounded border">
-      {renderTabs()}
-      {renderTestCase()}
+    <div className="w-full p-4 bg-white rounded shadow border border-gray-200">
+      {/* Tabs */}
+      <div className="flex items-center space-x-4 border-b pb-2 mb-4">
+        {examples?.map((obj, ind) => {
+          return (
+            <button
+              onClick={() => onClickTestCase(ind)}
+              key={ind}
+              className={`px-4 py-1 ${activeIndex === ind ? "border-b-2" : " "} border-indigo-500 font-medium text-indigo-600`}
+            >
+              Case {ind + 1}
+            </button>
+          );
+        })}
+        <button
+          className="ml-auto px-2 py-1 text-indigo-600 hover:bg-indigo-100 rounded flex items-center gap-1 cursor-not-allowed"
+          disabled
+        >
+          <Plus size={16} />
+          Add
+        </button>
+      </div>
+
+      <div className="grid gap-6">
+        {/* Input Section */}
+        <div className="flex flex-col space-y-2">
+          <div>
+            <label className="font-medium text-gray-700">Input</label>
+            <textarea
+              className="w-full h-16 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
+              value={example.input}
+            />
+          </div>
+        </div>
+
+
+        {/* Output Section */}
+        <div className="flex flex-col space-y-2">
+          <div>
+            <label className="font-medium text-gray-700">Output</label>
+            <textarea
+              className="w-full h-16 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
+              value={example.output}
+            />
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 };

@@ -24,7 +24,6 @@ const QuestionDescription = () => {
                 method: "GET",
                 url: problemEndpoints.GET_PROBLEM_BY_ID(problemId)
             });
-            // console.log("Response", response);
             setProblem(response.data.data);
             // console.log("Problems in QuestionDesc", response.data.data);
         }
@@ -65,7 +64,6 @@ const QuestionDescription = () => {
                         <ResizablePanel defaultSize={25}>
                             <div className="w-full p-4 h-full">
                                 <TestCase examples={problem.examples} />
-
                             </div>
                         </ResizablePanel>
                     </ResizablePanelGroup>
