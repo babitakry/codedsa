@@ -8,12 +8,14 @@ import CodeBite from '../../assets/CodeBite.png'
 export const Header = () => {
     const [showSidebar, setShowSidebar] = useState(false);
     const [problem, setProblem] = useState([]);
-    const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
     const navigate = useNavigate();
 
     const fetch_problem = async () => {
         try {
-            const response = await axios.get(problemEndpoints.GET_ALL_PROBLEM);
+            const response = await axios({
+                method: "GET",
+                url: problemEndpoints.GET_ALL_PROBLEM,                
+            });
             setProblem(response.data.data);
         } catch (error) {
             console.error("Error fetching problems:", error);
@@ -23,16 +25,6 @@ export const Header = () => {
     useEffect(() => {
         fetch_problem();
     }, []);
-
-    // Automatically navigate when currentProblemIndex changes
-    useEffect(() => {
-        if (problem.length > 0) {
-            const current = problem[currentProblemIndex];
-            navigate(`/problems/${current.title}`, {
-                state: current._id
-            });
-        }
-    }, [currentProblemIndex, problem, navigate]);
 
     const handleNavigate = (title, problemId) => {
         setShowSidebar(false);
@@ -66,12 +58,7 @@ export const Header = () => {
                             <List className="w-4 h-4" />
                             <span className="text-sm font-medium">Problem List</span>
                         </button>
-                        <button className="p-1 hover:bg-gray-100 rounded" onClick={handlePrevProblem} disabled={currentProblemIndex === 0}>
-                            <ChevronLeft className="w-5 h-5" />
-                        </button>
-                        <button className="p-1 hover:bg-gray-100 rounded" onClick={handleNextProblem} disabled={currentProblemIndex === problem.length - 1}>
-                            <ChevronRight className="w-5 h-5" />
-                        </button>
+                        
                     </div>
 
                     {/* Center Section with Run and Submit buttons */}
@@ -130,11 +117,12 @@ export const Header = () => {
                                         </span>
 
                                         <span
-                                            className={`font-medium ${prob.difficulty === 'Easy'
+                                            className={`font-medium ${
+                                                prob.difficulty === 'Easy'
                                                 ? 'text-green-500'
                                                 : prob.difficulty === 'Medium'
-                                                    ? 'text-yellow-500'
-                                                    : 'text-red-500'
+                                                ? 'text-yellow-500'
+                                                : 'text-red-500'
                                                 }`}
                                         >
                                             {prob.difficulty}
