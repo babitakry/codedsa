@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/resizable"
 import { useLocation } from "react-router"
 import axios from "axios"
-import TestCase from "@/components/Question/TestCase"
+import TestCase from "@/components/problem-description/TestCase"
 import { problemEndpoints } from "@/services/api"
 
 const QuestionDescription = () => {

@@ -19,6 +19,17 @@ const RightSide = ({ initialCode }) => {
         }
     }, [initialCode]); 
 
+    const changeLanguage = (e)=>{
+        const lang = e.target.value;
+        setLanguage(lang);
+
+        for(let i = 0; i < initialCode.length; i++){
+            if(initialCode[i]?.lang === lang){
+                // console.log("Initial-code ", initialCode[i]);
+                setCode(initialCode[i]?.code);
+            }
+        }
+    }
 
     const executeCode = async () => {
         const res = await axios({
@@ -57,21 +68,10 @@ const RightSide = ({ initialCode }) => {
                 'x-rapidapi-host': 'judge0-ce.p.rapidapi.com'
             }
         })
-
-        console.log("response", res.data)
+        console.log("response", res.data);
     }
 
-    const changeLanguage= (e)=>{
-        const lang = e.target.value;
-        setLanguage(lang);
-
-        for(let i=0;i<initialCode.length ;i++){
-            if(initialCode[i]?.lang===lang){
-                // console.log("infdafsdf", initialCode[i]);
-                setCode(initialCode[i]?.code);
-            }
-        }
-    }
+    
 
     return (
         <div className="w-full h-full flex flex-col">
@@ -91,7 +91,6 @@ const RightSide = ({ initialCode }) => {
                                 })
                             }
                         </select>
-                        <span className="text-sm text-gray-600">Auto</span>
                     </div>
 
                     <div className="flex items-center space-x-2">
