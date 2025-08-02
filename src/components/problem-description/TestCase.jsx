@@ -8,7 +8,7 @@ const TestCase = ({ examples }) => {
   const onClickTestCase = (ind) => {
     console.log(ind, examples)
     setActiveIndex(ind);
-    setExample(examples[ind])
+    setExample(examples[ind]);
   }
 
   console.log("exmap", example)
