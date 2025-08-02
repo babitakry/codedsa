@@ -15,8 +15,11 @@ import { problemEndpoints } from "@/services/api"
 const QuestionDescription = () => {
     const [activeTab, setActiveTab] = useState("Description");
     const [problem, setProblem] = useState({});
+    const [size, setSize] = useState(50);
     const problemId = useLocation()?.state;
     // console.log("prolem id", problemId);
+
+    console.log("Size", size);
 
     const fetch_problem = async () => {
         try {
@@ -36,6 +39,11 @@ const QuestionDescription = () => {
         fetch_problem();
     }, [problemId]);
 
+
+    useEffect(() => {
+        console.log("Size",);
+    }, [size])
+
     return (
         <div className="min-h-screen bg-white">
             {/* Header */}
@@ -52,12 +60,11 @@ const QuestionDescription = () => {
                     </div>
                 </ResizablePanel>
                 <ResizableHandle withHandle />
-                <ResizablePanel defaultSize={50}>
+                <ResizablePanel key={size} defaultSize={size}>
                     <ResizablePanelGroup direction="vertical">
                         <ResizablePanel defaultSize={75}>
                             <div className="flex h-full w-full items-center justify-center">
-                                {/* Right Panel - Code Editor */}
-                                <RightSide initialCode={problem?.boiler_plate_code} />
+                                <RightSide setSize={setSize} initialCode={problem?.boiler_plate_code} />
                             </div>
                         </ResizablePanel>
                         <ResizableHandle withHandle />
@@ -68,6 +75,7 @@ const QuestionDescription = () => {
                         </ResizablePanel>
                     </ResizablePanelGroup>
                 </ResizablePanel>
+
             </ResizablePanelGroup>
 
 

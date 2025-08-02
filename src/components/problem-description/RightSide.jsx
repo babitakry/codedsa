@@ -8,7 +8,7 @@ import {
 } from "lucide-react"
 import axios from "axios";
 
-const RightSide = ({ initialCode }) => {
+const RightSide = ({setSize, initialCode }) => {
     // console.log("InitialCode: ", initialCode);
     const [language, setLanguage] = useState(initialCode && initialCode[0]?.lang);
     const [code, setCode] = useState("");
@@ -71,7 +71,6 @@ const RightSide = ({ initialCode }) => {
         console.log("response", res.data);
     }
 
-    
 
     return (
         <div className="w-full h-full flex flex-col">
@@ -101,7 +100,9 @@ const RightSide = ({ initialCode }) => {
                             <Play onClick={executeCode} className="w-4 h-4" />
                         </button>
                         <button className="p-1 hover:bg-gray-100 rounded">
-                            <Maximize2 className="w-4 h-4" />
+                            <Maximize2 
+                            onClick={()=>setSize(100)}
+                            className="w-4 h-4" />
                         </button>
                     </div>
                 </div>
