@@ -27,10 +27,14 @@ const TestCase = ({ examples }) => {
             <button
               onClick={() => onClickTestCase(ind)}
               key={ind}
-              className={`px-4 py-1 ${activeIndex === ind ? "border-b-2" : " "} border-indigo-500 font-medium text-indigo-600`}
+              className={`px-3 py-1 rounded-md font-medium transition-all duration-150 ${activeIndex === ind
+                  ? "bg-indigo-100 text-indigo-700 border border-indigo-400"
+                  : "text-gray-600 hover:bg-gray-100"
+                }`}
             >
               Case {ind + 1}
             </button>
+
           );
         })}
         <button
