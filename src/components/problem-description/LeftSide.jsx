@@ -29,7 +29,7 @@ export const LeftSide = ({ activeTab, setActiveTab, problem }) => {
         </div> */}
 
         <Tabs defaultValue="description" className="w-full max-w-4xl mx-auto">
-          <TabsList className="grid grid-cols-5 gap-2 bg-white p-2">
+          <TabsList className="grid grid-cols-5 gap-2 w-full h-14 bg-white p-2 border rounded-md shadow-sm">
             <TabsTrigger
               value="description"
               className="flex items-center justify-center gap-1 px-3 py-2 rounded-md text-sm font-medium transition-all duration-150 
