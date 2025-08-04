@@ -8,7 +8,7 @@ import {
 } from "lucide-react"
 import axios from "axios";
 
-const RightSide = ({setSize, initialCode }) => {
+const RightSide = ({ setSize, initialCode }) => {
     // console.log("InitialCode: ", initialCode);
     const [language, setLanguage] = useState(initialCode && initialCode[0]?.lang);
     const [code, setCode] = useState("");
@@ -17,14 +17,14 @@ const RightSide = ({setSize, initialCode }) => {
         if (initialCode) {
             setCode(initialCode[0]?.code);
         }
-    }, [initialCode]); 
+    }, [initialCode]);
 
-    const changeLanguage = (e)=>{
+    const changeLanguage = (e) => {
         const lang = e.target.value;
         setLanguage(lang);
 
-        for(let i = 0; i < initialCode.length; i++){
-            if(initialCode[i]?.lang === lang){
+        for (let i = 0; i < initialCode.length; i++) {
+            if (initialCode[i]?.lang === lang) {
                 // console.log("Initial-code ", initialCode[i]);
                 setCode(initialCode[i]?.code);
             }
@@ -73,8 +73,9 @@ const RightSide = ({setSize, initialCode }) => {
 
 
     return (
-        <div className="w-full h-full flex flex-col">
-            <div className="border-b border-gray-200 p-4">
+        <div className="w-full h-full flex flex-col rounded-2xl shadow-md border border-gray-200 overflow-hidden">
+            {/* Top Toolbar */}
+            <div className="border-b border-gray-200 p-3 bg-white">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                         <select
@@ -83,15 +84,13 @@ const RightSide = ({setSize, initialCode }) => {
                             className="border border-gray-300 rounded px-3 py-1 text-sm"
                         >
                             {
-                                initialCode && initialCode?.map((obj,ind)=>{
-                                    return (
-                                        <option key={ind}>{obj.lang}</option>
-                                    )
-                                })
+                                initialCode && initialCode.map((obj, ind) => (
+                                    <option key={ind}>{obj.lang}</option>
+                                ))
                             }
                         </select>
                     </div>
-
+    
                     <div className="flex items-center space-x-2">
                         <button className="p-1 hover:bg-gray-100 rounded">
                             <RotateCcw onClick={getSubmission} className="w-4 h-4" />
@@ -100,26 +99,30 @@ const RightSide = ({setSize, initialCode }) => {
                             <Play onClick={executeCode} className="w-4 h-4" />
                         </button>
                         <button className="p-1 hover:bg-gray-100 rounded">
-                            <Maximize2 
-                            onClick={()=>setSize(100)}
-                            className="w-4 h-4" />
+                            <Maximize2 onClick={() => setSize(100)} className="w-4 h-4" />
                         </button>
                     </div>
                 </div>
             </div>
-
-            <div>
+    
+            {/* Monaco Editor (no border) */}
+            <div className="flex-1">
                 <Editor
-                    height="90vh"
+                    height="100%"
                     defaultLanguage="cpp"
                     value={code}
                     onChange={(value) => setCode(value)}
+                    options={{
+                        fontSize: 14,
+                        minimap: { enabled: false },
+                        scrollBeyondLastLine: false,
+                        automaticLayout: true,
+                    }}
                 />
-
             </div>
-
         </div>
     )
+    
 }
 
 export default RightSide
