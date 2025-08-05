@@ -2,6 +2,7 @@ import React from "react";
 import { Send } from "lucide-react";
 
 const Chatbot = () => {
+  
   return (
     <div className="flex flex-col h-[calc(100vh-120px)] bg-gray-100 mt-3 rounded-xl border shadow-md overflow-hidden">
       {/* Header */}
