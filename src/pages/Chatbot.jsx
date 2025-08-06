@@ -10,38 +10,52 @@ const Chatbot = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    
-    try {
-      let arr = messageHistory;
-    
-      setMessageHistory([...messageHistory, {
-        role: "user",
-        message: input
-      }])
+    if (!input) return;
 
-      arr.push({
-        role: "user",
-        message: input
-      })
-      const response = await axios({
-        method: "POST",
-        url: chatbotEndpoinst.GET_CHATBOT,
-        data: {
-          prompt: input
+    setMessageHistory(prev => [...prev, { role: "user", message: input }]);
+
+    const response = await fetch(chatbotEndpoinst.GET_CHATBOT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ prompt: input })
+    });
+
+    if (!response.ok) {
+      console.error("Error in chatbot stream");
+      return;
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder("utf-8");
+
+    let botMessage = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      const chunk = decoder.decode(value);
+      const lines = chunk.split("\n").filter(line => line.trim() !== "");
+
+      for (let line of lines) {
+        if (line === "data: [DONE]") {
+          setOutput("")
+          setMessageHistory(prev => [...prev, { role: "system", message: botMessage }]);
+          return;
         }
-      })
-      console.log("Chatbot Response", response);
 
-      setMessageHistory([...arr, {
-        role: "system",
-        message: response.data?.data
-      }])
+        if (line.startsWith("data: ")) {
+          const content = line.replace("data: ", "");
+          botMessage += content;
 
+          // Optional: live typing effect
+          setOutput(botMessage);
+        }
+      }
     }
-    catch (error) {
-      console.error("Error in Fetching chatbot response:", error);
-    }
-  }
+  };
 
   console.log(messageHistory)
 
@@ -59,6 +73,7 @@ const Chatbot = () => {
           </div>
         </div>
 
+
         {/* User message */}
         {
           messageHistory?.map((msg, ind) => {
@@ -75,6 +90,16 @@ const Chatbot = () => {
                 </div>
             )
           })
+        }
+
+{
+          output && (
+            <div className="w-full flex">
+              <div className="bg-white p-3 rounded-xl shadow-sm max-w-[75%] text-sm text-gray-800">
+                {output}
+              </div>
+            </div>
+          )
         }
       </div>
 
