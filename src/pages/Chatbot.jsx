@@ -18,7 +18,7 @@ const Chatbot = () => {
         role: "user",
         message: input
       }])
-      
+
       arr.push({
         role: "user",
         message: input
@@ -51,7 +51,6 @@ const Chatbot = () => {
         🤖 AI Chat Assistant
       </div>
 
-      {/* Messages area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {/* Bot message */}
         <div className="w-full flex">
