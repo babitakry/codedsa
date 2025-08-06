@@ -17,7 +17,6 @@ const Signin = () => {
         console.log("Username = ", username)
         console.log("Password = ",password)
 
-        // connect with backend
         try {
             const response = await axios({
                 method: "POST",
@@ -35,12 +34,10 @@ const Signin = () => {
             console.log(err.response)
             setError(err?.response?.data?.detail);
             if(err.response.status == 404){
-                // Redirect to Sign Up page
                 navigate("/signup");
             }
           }
         setIsSigning(false);
-
     }
     return (
         <div className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center px-6 py-8">
@@ -74,20 +71,6 @@ const Signin = () => {
                                 required
                             />
                         </div>
-                        {/* <div className="flex items-center justify-between text-sm">
-                            <label className="flex items-center text-gray-500 dark:text-gray-300">
-                                <input
-                                    type="checkbox"
-                                    className="mr-2 w-4 h-4 rounded border border-gray-300 bg-gray-50 focus:ring-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-indigo-600"
-                                    required
-                                />
-                                Remember me
-                            </label>
-                            <Link to="#" className="text-indigo-600 hover:underline dark:text-indigo-500">
-                                Forgot password?
-                            </Link>
-                        </div> */}
-
                         <div className='text-red-500'>
                             {
                                 error &&

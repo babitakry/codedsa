@@ -15,6 +15,7 @@ import AdminAddProblem from './components/admin/AdminAddProblem';
 import About from './pages/About';
 import { Header } from './components/problem-description/Header';
 
+
 // Admin layout with sidebar
 const AdminLayout = () => {
   return (
@@ -52,9 +53,7 @@ function App() {
           <Route index element={<Problems />} />
           <Route path=":name" element={<QuestionDescription />} />
           <Route path=":slug" element={<Header/>} />
-
         </Route>
-
         <Route path="/admin/*" element={<AdminLayout />} />
       </Routes>
       {

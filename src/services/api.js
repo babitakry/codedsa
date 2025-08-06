@@ -15,9 +15,13 @@ export const problemEndpoints = {
     GET_PROBLEM_BY_ID:(id)=> BASE_URL+`problems/getproblem/${id}`,
     GET_ALL_PROBLEM: BASE_URL+"problems/getallproblem",
     UPDATE_PROBLEM: BASE_URL+"problems/updateproblem/:id",
-    DELETE_PROBLEM:(id)=> BASE_URL+`problems/deleteproblem/${id}`
+    DELETE_PROBLEM:(id)=> BASE_URL+`problems/deleteproblem/${id}`,
 }
 
 export const userEndpoints = {
     UPDATE_USER: BASE_URL+"user/updateuser/:id",
+}
+
+export const chatbotEndpoinst = {
+    GET_CHATBOT: BASE_URL+`chatbot`
 }
