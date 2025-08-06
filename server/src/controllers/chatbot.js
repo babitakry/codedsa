@@ -1,39 +1,42 @@
 import { Mistral } from '@mistralai/mistralai';
 import 'dotenv/config';
 
-const apiKey = process.env.MISTRAL_API_KEY;
-const client = new Mistral({ apiKey });
-
 const chatbotController = async (req, res) => {
-    const  {prompt}  = req.body;
-
+    const { prompt } = req.body;
     const apiKey = process.env.MISTRAL_API_KEY;
-    const client = new Mistral({apiKey: apiKey});
+    const client = new Mistral({ apiKey });
 
     try {
-        if(!prompt){
+        if (!prompt) {
             return res.status(400).json({
                 message: "Please enter your question !!"
-            })
+            });
         }
-        const chatResponse = await client.chat.complete({
+
+        res.setHeader("Content-Type", "text/event-stream");
+        res.setHeader("Cache-Control", "no-cache");
+        res.setHeader("Connection", "keep-alive");
+
+        const chatResponse = await client.chat.stream({
             model: 'mistral-large-latest',
-            messages: [{
-                role: 'user', 
-                content:  prompt
-            }],
+            messages: [{ role: 'user', content: prompt }],
         });
-        const output = chatResponse.choices[0].message.content;
-        // console.log('Chat:', output);
-        return res.status(200).json({
-            message: "Request send successfully",
-            data: output
-        })
-    } 
-    catch (error) {
-        return res.status(500).json({
-            message: "Failed to fetch data" 
-        })
+
+        for await (const item of chatResponse) {
+            const streamText = item.data.choices[0]?.delta?.content;
+            if (typeof streamText === "string") {
+                res.write(`data: ${streamText}\n\n`);
+            }
+        }
+
+        res.write("data: [DONE]\n\n");
+        res.end();
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Failed to fetch data"
+        });
     }
 };
 
