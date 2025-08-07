@@ -5,7 +5,7 @@ import ProblemDetail from './ProblemDetail';
 import Chatbot from '@/pages/Chatbot';
 
 export const LeftSide = ({ activeTab, setActiveTab, problem }) => {
-  // console.log("Problem :", problem);
+  console.log("Problem :", problem);
   const openChatAI = (tab) => {
     setActiveTab(tab);
 
@@ -70,7 +70,7 @@ export const LeftSide = ({ activeTab, setActiveTab, problem }) => {
             <p className="text-gray-700">Your past submissions will show up here.</p>
           </TabsContent>
           <TabsContent value="chat_ai">
-            <Chatbot />
+            <Chatbot problemId = {problem?._id}/>
           </TabsContent>
         </div>
       </Tabs>

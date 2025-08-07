@@ -3,7 +3,7 @@ import { Send } from "lucide-react";
 import { chatbotEndpoinst } from "@/services/api";
 import axios from "axios";
 
-const Chatbot = () => {
+const Chatbot = ({problemId}) => {
   const [output, setOutput] = useState("");
   const [input, setInput] = useState("");
   const [messageHistory, setMessageHistory] = useState([]);// {role: "system | user", message: "string"}
@@ -19,7 +19,7 @@ const Chatbot = () => {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ prompt: input })
+      body: JSON.stringify({ prompt: input, problemId: problemId })
     });
 
     if (!response.ok) {
