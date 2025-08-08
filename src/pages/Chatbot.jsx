@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Send } from "lucide-react";
 import { chatbotEndpoinst } from "@/services/api";
-import axios from "axios";
+
 
 const Chatbot = ({problemId}) => {
   const [output, setOutput] = useState("");
