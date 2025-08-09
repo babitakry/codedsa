@@ -41,9 +41,7 @@ const TestCase = ({ examples }) => {
         </button>
       </div>
 
-      {/* Test Case Content */}
       <div className="grid gap-6">
-        {/* Input Section */}
         <div>
           <label className="flex items-center gap-2 font-semibold text-gray-700 mb-1">
             {/* <TerminalSquare size={18} /> */}
@@ -53,8 +51,6 @@ const TestCase = ({ examples }) => {
             {example.input}
           </div>
         </div>
-
-        {/* Output Section */}
         <div>
           <label className="flex items-center gap-2 font-semibold text-gray-700 mb-1">
             {/* <SquareTerminal size={18} /> */}
