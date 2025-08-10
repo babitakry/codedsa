@@ -35,11 +35,11 @@ const QuestionDescription = () => {
     }, [problemId]);
 
     return (
-        <div className="w-full h-screen border border-gray-300  p-2 bg-white">
+        <div className="w-full h-screen ">
             <Header />
             <ResizablePanelGroup
                 direction="horizontal"
-                className="w-full h-full mt-3 rounded-lg border border-gray-300"
+                className="w-full h-full mt-3"
             >
                 <ResizablePanel defaultSize={50}>
                     <div className="h-full p-2 border-r border-gray-300 bg-gray-50 rounded-l-lg overflow-auto">
