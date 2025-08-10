@@ -5,11 +5,11 @@ import {
     Play,
     RotateCcw,
     Maximize2,
+    ChevronDown
 } from "lucide-react"
 import axios from "axios";
 
 const RightSide = ({ setSize, initialCode }) => {
-    // console.log("InitialCode: ", initialCode);
     const [language, setLanguage] = useState(initialCode && initialCode[0]?.lang);
     const [code, setCode] = useState("");
 
@@ -25,7 +25,6 @@ const RightSide = ({ setSize, initialCode }) => {
 
         for (let i = 0; i < initialCode.length; i++) {
             if (initialCode[i]?.lang === lang) {
-                // console.log("Initial-code ", initialCode[i]);
                 setCode(initialCode[i]?.code);
             }
         }
@@ -71,41 +70,44 @@ const RightSide = ({ setSize, initialCode }) => {
         console.log("response", res.data);
     }
 
-
     return (
         <div className="w-full h-full flex flex-col rounded-2xl shadow-md border border-gray-200 overflow-hidden">
             {/* Top Toolbar */}
             <div className="border-b border-gray-200 p-3 bg-white">
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
+                    
+                    {/* Language Selector with Custom UI */}
+                    <div className="relative">
                         <select
                             value={language}
                             onChange={changeLanguage}
-                            className="border border-gray-300 rounded px-3 py-1 text-sm"
+                            className="appearance-none border border-gray-300 rounded-lg px-4 py-2 text-sm bg-white pr-8 shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                         >
-                            {
-                                initialCode && initialCode.map((obj, ind) => (
-                                    <option key={ind}>{obj.lang}</option>
-                                ))
-                            }
+                            {initialCode && initialCode.map((obj, ind) => (
+                                <option key={ind} value={obj.lang}>{obj.lang}</option>
+                            ))}
                         </select>
+                        <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none text-gray-500">
+                            <ChevronDown size={16} />
+                        </div>
                     </div>
-    
+
+                    {/* Action Buttons */}
                     <div className="flex items-center space-x-2">
-                        <button className="p-1 hover:bg-gray-100 rounded">
-                            <RotateCcw onClick={getSubmission} className="w-4 h-4" />
+                        <button className="p-1 hover:bg-gray-100 rounded" onClick={getSubmission}>
+                            <RotateCcw className="w-4 h-4" />
                         </button>
-                        <button className="p-1 hover:bg-gray-100 rounded">
-                            <Play onClick={executeCode} className="w-4 h-4" />
+                        <button className="p-1 hover:bg-gray-100 rounded" onClick={executeCode}>
+                            <Play className="w-4 h-4" />
                         </button>
-                        <button className="p-1 hover:bg-gray-100 rounded">
-                            <Maximize2 onClick={() => setSize(100)} className="w-4 h-4" />
+                        <button className="p-1 hover:bg-gray-100 rounded" onClick={() => setSize(100)}>
+                            <Maximize2 className="w-4 h-4" />
                         </button>
                     </div>
                 </div>
             </div>
-    
-            {/* Monaco Editor (no border) */}
+
+            {/* Monaco Editor */}
             <div className="flex-1">
                 <Editor
                     height="100%"
@@ -122,7 +124,6 @@ const RightSide = ({ setSize, initialCode }) => {
             </div>
         </div>
     )
-    
 }
 
-export default RightSide
+export default RightSide;
