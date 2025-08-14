@@ -42,7 +42,7 @@ const QuestionDescription = () => {
                 className="w-full h-full mt-3"
             >
                 <ResizablePanel defaultSize={50}>
-                    <div className="h-full p-2 border-r border-gray-300 bg-gray-50 rounded-l-lg overflow-auto">
+                    <div className="h-full p-2 overflow-auto">
                         <LeftSide
                             activeTab={activeTab}
                             setActiveTab={setActiveTab}
@@ -56,7 +56,7 @@ const QuestionDescription = () => {
                 <ResizablePanel key={size} defaultSize={size}>
                     <ResizablePanelGroup direction="vertical">
                         <ResizablePanel defaultSize={75}>
-                            <div className="p-2 h-full border-b border-gray-300 bg-gray-50">
+                            <div className="p-2 h-full">
                                 <RightSide
                                     setSize={setSize}
                                     initialCode={problem?.boiler_plate_code}
@@ -67,7 +67,7 @@ const QuestionDescription = () => {
                         <ResizableHandle withHandle />
 
                         <ResizablePanel defaultSize={25}>
-                            <div className="w-full h-full p-2 bg-gray-50 border-t border-gray-300 rounded-b-lg">
+                            <div className="w-full h-full p-2 ">
                                 <TestCase examples={problem.examples} />
                             </div>
                         </ResizablePanel>
