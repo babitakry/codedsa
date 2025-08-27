@@ -86,7 +86,7 @@ export const Header = () => {
           />
 
           {/* Sidebar Panel */}
-          <div className="relative z-50 w-80 bg-white h-full shadow-xl rounded-r-xl overflow-y-auto">
+          <div className="relative z-50 w-80 bg-white h-full shadow-xl rounded-md overflow-y-auto">
             <div className="flex justify-between items-center px-4 py-3 border-b">
               <h2 className="text-lg font-semibold text-gray-800">Problem List</h2>
               <button

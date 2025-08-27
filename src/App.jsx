@@ -14,6 +14,8 @@ import AdminUsers from './components/admin/AdminUsers';
 import AdminAddProblem from './components/admin/AdminAddProblem';
 import About from './pages/About';
 import { Header } from './components/problem-description/Header';
+import ProtectedRoute from './components/protected/ProtectedRoute';
+import { AuthProvider } from './context/AuthContext';
 
 
 // Admin layout with sidebar
@@ -39,7 +41,7 @@ function App() {
   const location = useLocation();
   // console.log("location", location);
   return (
-    <>
+    <AuthProvider>
       {
         location?.pathname!=="/admin" && !location.pathname.startsWith("/problems/") && <Navbar />
       }
@@ -48,7 +50,11 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } />
         <Route path="/problems">
           <Route index element={<Problems />} />
           <Route path=":name" element={<QuestionDescription />} />
@@ -59,7 +65,7 @@ function App() {
       {
         location?.pathname!=="/admin" && !location.pathname.startsWith("/problems/") && <Footer />
       }
-    </>
+    </AuthProvider>
   )
 }
 

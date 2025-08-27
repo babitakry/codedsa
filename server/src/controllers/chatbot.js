@@ -25,6 +25,7 @@ const chatbotController = async (req, res) => {
             messages: [
                 { role: 'system', content: JSON.stringify(problem)},
                 { role: 'system', content: "Only answer questions related to the given problem. don't answer the questions out of this or tell i don't know "},
+                { role: "system", content: "Strictly return the output in markdown format. For new lines, use <br/>." },
                 { role: 'user', content: prompt }
             ],
         });

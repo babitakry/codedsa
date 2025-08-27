@@ -1,3 +1,4 @@
+import { useAuth } from '@/context/AuthContext';
 import { authEndpoints } from '@/services/api';
 import axios from 'axios';
 import React, { use, useState } from 'react';
@@ -10,6 +11,7 @@ const Signin = () => {
     const [isSigning, setIsSigning] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const {login} = useAuth();
 
     const onSubmit = async(e) => {
         setIsSigning(true);
@@ -27,7 +29,7 @@ const Signin = () => {
                 }
             });
             console.log(response);
-            localStorage.setItem("token",response.data?.access_token);
+            login(response.data?.token)
             navigate("/")
             
           } catch (err) {
