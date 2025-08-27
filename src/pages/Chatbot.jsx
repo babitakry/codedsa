@@ -60,7 +60,7 @@ const Chatbot = ({problemId}) => {
   console.log(messageHistory)
 
   return (
-    <div className="flex flex-col h-[calc(100vh-120px)] bg-gray-100 mt-3 rounded-xl border shadow-md overflow-hidden">
+    <div className="flex flex-col h-[calc(100vh-150px)] bg-gray-100 mt-3 rounded-xl border shadow-md overflow-hidden">
       <div className="p-4 bg-white border-b shadow-sm font-semibold text-lg text-gray-800">
         🤖 AI Chat Assistant
       </div>
