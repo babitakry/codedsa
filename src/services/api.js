@@ -20,7 +20,8 @@ export const problemEndpoints = {
 }
 
 export const userEndpoints = {
-    UPDATE_USER: BASE_URL+"user/updateuser/:id",
+    UPDATE_USER: BASE_URL+"user/updateuser",
+    GET_USER: BASE_URL+"user/getuser",
 }
 
 export const chatbotEndpoinst = {

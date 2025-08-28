@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -13,8 +13,10 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import axios from 'axios';
+import { userEndpoints } from '@/services/api';
 
-const EditProfile = () => {
+const EditProfile = ({user, setOpen}) => {
+    console.log("user", user);
     const [username, setUsername] = useState("");
     const [summary, setSummary] = useState("");
     const [country, setCountry] = useState("");
@@ -26,15 +28,7 @@ const EditProfile = () => {
 
 
     const updateprofile = async () => {
-        console.log("Username:", username);
-        console.log("Summary:", summary);
-        console.log("Country:", country);
-        console.log("College:", college);
-        console.log("Language:", language);
-        console.log("LinkedIn:", linkedIn);
-        console.log("GitHub:", github);
-        console.log("Codeforces:", codeforces);
-
+        
         const social_links = [
             {
                 platform:"github",
@@ -51,24 +45,42 @@ const EditProfile = () => {
         ]
 
         try {
+            const token = localStorage.getItem("token");
             const response = await axios({
                 method: "PUT",
-                url: "http://localhost:3000/api/v1/user/updateuser/6864dcad9636afa49f9a3a25",
+                url: userEndpoints.UPDATE_USER,
                 data: {
                     username: username,
                     summary: summary,
                     country: country,
                     college: college,
-                    language_used: language_used,
+                    language_used: [language],
                     social_links: social_links,
-                }
+                },
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             });
+            setOpen(false);
             console.log("Response......", response);
         }
         catch (error) {
-            console.log(error.response);
+            console.log(error);
         }
     }
+
+    useEffect(()=>{
+        if(user){
+            setUsername(user?.username);
+            setSummary(user?.summary);
+            setCountry(user?.country);
+            setCollege(user?.college);
+            setLanguage(user?.language);
+            setLinkedIn(user?.social_links[1].url);
+            setGithub(user?.social_links[0].url);
+            setCodeforces(user?.social_links[2].url);
+        }
+    },[user])
 
     return (
         <DialogContent className="sm:max-w-[800px]">
@@ -83,67 +95,75 @@ const EditProfile = () => {
                 <div className="grid gap-3">
                     <Label htmlFor="name">Name</Label>
                     <Input
+                        value = {username}
                         onChange={(e) => setUsername(e.target.value)}
                         id="name"
                         name="name"
-                        placeholder="Enter your name"
+                        placeholder=""
                     />
                 </div>
                 <div className="grid gap-3">
                     <Label htmlFor="summary">Summary</Label>
                     <Input
+                        value = {summary}
                         onChange={(e) => setSummary(e.target.value)}
                         id="summary"
                         name="summary"
-                        placeholder="Frontend Developer" />
+                        placeholder="" />
                 </div>
                 <div className="grid gap-3">
                     <Label htmlFor="country">Country</Label>
                     <Input
+                        value = {country}
                         onChange={(e) => setCountry(e.target.value)}
                         id="country"
                         name="country"
-                        placeholder="India" />
+                        placeholder="" />
                 </div>
                 <div className="grid gap-3">
                     <Label htmlFor="college">College</Label>
                     <Input
+                        value = {college}
                         onChange={(e) => setCollege(e.target.value)}
                         id="college"
                         name="college"
-                        placeholder="XYZ College of Engineering" />
+                        placeholder="" />
                 </div>
                 <div className="grid gap-3">
                     <Label htmlFor="languages">Languages Used</Label>
                     <Input
+                        value = {language}
                         onChange={(e) => setLanguage(e.target.value)}
                         id="languages"
                         name="languages"
-                        placeholder="C++, Python, JavaScript" />
+                        placeholder="" />
                 </div>
                 <div className="grid gap-3">
                     <Label htmlFor="linkedin">LinkedIn</Label>
                     <Input
+                        value = {linkedIn}
                         onChange={(e) => setLinkedIn(e.target.value)}
                         id="linkedin"
                         name="linkedin"
-                        placeholder="https://www.linkedin.com/in/your-profile" />
+                        placeholder=" " />
                 </div>
                 <div className="grid gap-3">
                     <Label htmlFor="github">GitHub</Label>
                     <Input
+                        value = {github}
                         onChange={(e) => setGithub(e.target.value)}
                         id="github"
                         name="github"
-                        placeholder="https://github.com/your-profile" />
+                        placeholder=" " />
                 </div>
                 <div className="grid gap-3">
                     <Label htmlFor="codeforces">Codeforces</Label>
                     <Input
+                        value = {codeforces}
                         onChange={(e) => setCodeforces(e.target.value)}
                         id="codeforces"
                         name="codeforces"
-                        placeholder="https://codeforces.com/profile/your-handle" />
+                        placeholder=" " />
                 </div>
             </div>
 
@@ -151,7 +171,7 @@ const EditProfile = () => {
                 <DialogClose asChild>
                     <Button variant="outline">Cancel</Button>
                 </DialogClose>
-                <Button type="submit">Save changes</Button>
+                <Button type="submit" onClick={updateprofile}>Save changes</Button>
             </DialogFooter>
         </DialogContent>
     );

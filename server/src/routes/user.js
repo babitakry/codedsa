@@ -5,6 +5,6 @@ import { authMiddleware } from "../middleware/user-auth.js";
 const router = express.Router();
 
 router.get("/getuser", authMiddleware, getUserController);
-router.put("/updateuser/:id",authMiddleware, updateuserController);
+router.put("/updateuser",authMiddleware, updateuserController);
 
 export default router;
