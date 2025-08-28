@@ -3,7 +3,7 @@ import { User } from "../models/user.models.js";
 
 export const updateuserController = async (req, res) => {
     const data = req.body;
-    console.log("Data.....", data);
+    // console.log("Data.....", data);
 
     // const params = req.params;
     // console.log("Params....", params);
@@ -34,6 +34,32 @@ export const updateuserController = async (req, res) => {
             message: "User Profile Updated Successfully",
             data: data
         }) ;
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).json({
+            sucess:false,
+            message:"Internal Server Error in Updating User......"
+        });
+    }
+}
+
+export const getUserController = async(req, res) => {
+    const user_id = req.user.data.user_id;
+
+    try{
+        const user = await User.findById(user_id);
+        if(!user){
+            return res.status(404).json({
+                success:false,
+                message:"User not Exist !!"
+            })
+        }
+        return res.status(201).json({
+            success: true,
+            message: "User Found Successfully !",
+            data: user
+        })
     }
     catch(error){
         console.log(error);
