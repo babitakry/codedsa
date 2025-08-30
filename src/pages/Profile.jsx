@@ -4,10 +4,12 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import EditProfile from "../components/editprofile/EditProfile";
 import { userEndpoints } from "@/services/api";
 import axios from "axios";
+import { useAuth } from "@/context/AuthContext";
 
 const Profile = () => {
     const [user, setUser] = useState(null);
     const [open, setOpen] = useState(false);
+    const {onLogout} = useAuth();
 
     const fetchUserProfile = async () => {
         try {
@@ -29,10 +31,10 @@ const Profile = () => {
 
     useEffect(() => {
         fetchUserProfile();
-    }, []);
+    }, [open]);
 
     return (
-        <div className="max-w-5xl mx-auto my-10 px-6">
+        <div className="max-w-5xl mx-auto my-10 px-6 min-h-[80vh]">
             {/* --- Header Section --- */}
             <div className="flex items-center justify-between bg-white border border-gray-300 rounded-xl shadow-sm p-6">
                 <div className="flex items-center gap-6">
@@ -50,14 +52,15 @@ const Profile = () => {
                         </p>
                     </div>
                 </div>
-                <Dialog open={open} onOpenChange={setOpen}>
-                    <DialogTrigger asChild>
-                        <Button>Edit Profile</Button>
-                    </DialogTrigger>
-                    <EditProfile user={user} onProfileUpdated={setUser} setOpen={setOpen} />
-                </Dialog>
-
-
+                <div className="flex flex-col space-y-2">
+                    <Dialog open={open} onOpenChange={setOpen}>
+                        <DialogTrigger asChild>
+                            <Button>Edit Profile</Button>
+                        </DialogTrigger>
+                        <EditProfile user={user} onProfileUpdated={setUser} setOpen={setOpen} />
+                    </Dialog>
+                    <Button onClick={onLogout} className="bg-red-500">Logout</Button>
+                </div>
             </div>
 
             {/* --- Stats Section --- */}
@@ -117,16 +120,16 @@ const Profile = () => {
                             return (
                                 <div>
                                     <p className="text-sm text-gray-500">{social?.platform}</p>
-        
-                                        <a
-                                            href={social?.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-gray-800 hover:underline"
-                                        >
-                                            {social?.url}
-                                        </a>
-    
+
+                                    <a
+                                        href={social?.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-gray-800 hover:underline"
+                                    >
+                                        {social?.url}
+                                    </a>
+
                                 </div>
                             )
                         })

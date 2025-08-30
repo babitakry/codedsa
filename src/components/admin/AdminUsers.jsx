@@ -19,7 +19,7 @@ const AdminUsers = () => {
   }, []);
 
   return (
-    <div className="w-full bg-gray-50 min-h-screen flex-1 pr-4 mt-6">
+    <div className="w-full bg-gray-50 min-h-screen flex-1 px-4 mt-6">
       <h2 className="text-3xl font-bold mb-6 text-indigo-700 text-center">All Users</h2>
       <div className="w-full overflow-x-auto rounded-lg shadow-lg">
         <table className="w-full min-w-max divide-y divide-gray-200 bg-white">

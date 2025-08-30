@@ -76,9 +76,9 @@ const EditProfile = ({user, setOpen}) => {
             setCountry(user?.country);
             setCollege(user?.college);
             setLanguage(user?.language);
-            setLinkedIn(user?.social_links[1].url);
-            setGithub(user?.social_links[0].url);
-            setCodeforces(user?.social_links[2].url);
+            setLinkedIn(user?.social_links[1]?.url);
+            setGithub(user?.social_links[0]?.url);
+            setCodeforces(user?.social_links[2]?.url);
         }
     },[user])
 

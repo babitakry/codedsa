@@ -62,8 +62,13 @@ export const AuthProvider = ({ children }) => {
         
     }
 
+    const onLogout = ()=>{
+        localStorage.removeItem("token");
+        setIsAuthenticated(false);
+    }
+
     return (
-        <AuthContext.Provider value={{ isAuthenticated, loading, login }}>
+        <AuthContext.Provider value={{ isAuthenticated, loading, login, onLogout }}>
             {children}
         </AuthContext.Provider>
     )

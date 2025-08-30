@@ -3,6 +3,7 @@ import { ClipboardList, User, Send, LogOut } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -11,6 +12,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Link } from "react-router"
+import { useAuth } from "@/context/AuthContext"
 
 // Menu items.
 const items = [
@@ -28,17 +30,11 @@ const items = [
     title: "Submission",
     url: "/admin/submission",
     icon: Send,
-  },
-  
-  {
-    title: "Logout",
-    url: "/admin/logout",
-    icon: LogOut,
   }
-  
 ]
 
 export function AppSidebar() {
+  const {onLogout} = useAuth();
   return (
     <Sidebar>
       <SidebarContent>
@@ -56,9 +52,16 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        <SidebarFooter>
+          <SidebarMenuButton onClick={onLogout}>
+            <LogOut />
+            <span>Logout</span>
+          </SidebarMenuButton>
+        </SidebarFooter>
       </SidebarContent>
     </Sidebar>
   )

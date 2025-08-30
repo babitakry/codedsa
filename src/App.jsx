@@ -17,15 +17,14 @@ import { Header } from './components/problem-description/Header';
 import ProtectedRoute from './components/protected/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 
-
 // Admin layout with sidebar
 const AdminLayout = () => {
   return (
     <SidebarProvider>
       <div className="w-full flex">
         <AppSidebar />
-        <main className="flex-1 p-4">
-          <SidebarTrigger/>
+        <main className="flex-1">
+          <SidebarTrigger className="absolute top-2"/>
           <Routes>
             <Route path="users" element={<AdminUsers/>} />
             <Route path="problems" element={<AdminProblems />} />
@@ -43,7 +42,7 @@ function App() {
   return (
     <AuthProvider>
       {
-        location?.pathname!=="/admin" && !location.pathname.startsWith("/problems/") && <Navbar />
+        !location?.pathname.includes("/admin") && !location.pathname.startsWith("/problems/") && <Navbar />
       }
       <Routes>
         <Route path="/" element={<Home />} />
@@ -63,7 +62,7 @@ function App() {
         <Route path="/admin/*" element={<AdminLayout />} />
       </Routes>
       {
-        location?.pathname!=="/admin" && !location.pathname.startsWith("/problems/") && <Footer />
+        !location?.pathname.includes("/admin") && !location.pathname.startsWith("/problems/") && <Footer />
       }
     </AuthProvider>
   )

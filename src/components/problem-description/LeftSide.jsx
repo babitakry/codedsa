@@ -11,9 +11,9 @@ export const LeftSide = ({ activeTab, setActiveTab, problem }) => {
 
   }
   return (
-    <div className="w-full relative">
-      <Tabs defaultValue="description" className="w-full max-w-4xl mx-auto rounded-2xl shadow-md  border-gray-200">
-        <TabsList className="grid grid-cols-5 gap-2 w-full h-14 p-2 shadow-sm sticky top-0 bg-white z-50 border-t-2">
+    <div className="w-full relative ">
+      <Tabs defaultValue="description" className="w-full max-w-4xl mx-auto ">
+        <TabsList className="grid grid-cols-5 gap-2 w-full h-14 p-2 shadow-sm sticky top-0 bg-white z-20 border-t-2">
           <TabsTrigger
             value="description"
             className="flex items-center justify-center gap-1 px-3 py-2 rounded-md text-sm font-medium transition-all duration-150 data-[state=active]:bg-indigo-100 data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm hover:bg-gray-100 text-gray-600"
@@ -56,7 +56,7 @@ export const LeftSide = ({ activeTab, setActiveTab, problem }) => {
         </TabsList>
 
 
-        <div className="h-[calc(100vh-140px)] relative">
+        <div className="h-[calc(100vh-140px)] relative ">
           <TabsContent value="description">
             <ProblemDetail problem={problem} />
           </TabsContent>

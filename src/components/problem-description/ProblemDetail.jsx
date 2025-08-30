@@ -2,8 +2,8 @@ import React from 'react'
 
 const ProblemDetail = ({ problem }) => {
     return (
-        <div className="w-full border-r border-gray-200">
-            <div className="p-6 overflow-y-auto ">
+        <div className="w-full border border-gray-200">
+            <div className="p-3 overflow-y-auto ">
                 <div className="space-y-8">
                     <div>
                         <h1 className="text-2xl font-bold text-gray-900 mb-3"><span>{problem.sno}.</span> {problem.title}</h1>

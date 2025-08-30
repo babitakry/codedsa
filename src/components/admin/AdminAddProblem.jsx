@@ -63,7 +63,7 @@ const AdminAddProblem = () => {
   };
 
   return (
-    <div className="w-full p-8 max-w-6xl mx-auto bg-white shadow-lg rounded-lg mt-10">
+    <div className="w-full p-8 max-w-6xl mx-auto bg-white shadow-lg rounded-lg">
       <h2 className="text-3xl font-bold text-indigo-700 mb-6">Add New Problem</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
 

@@ -4,11 +4,13 @@ import axios from 'axios';
 import { problemEndpoints } from '@/services/api';
 import { Link, useNavigate } from 'react-router-dom';
 import CodeBite from '../../assets/CodeBite.png';
+import { useAuth } from '@/context/AuthContext';
 
 export const Header = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [problem, setProblem] = useState([]);
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   const fetch_problem = async () => {
     try {
@@ -65,14 +67,24 @@ export const Header = () => {
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center space-x-3">
-            <button className="p-2 hover:bg-gray-100 rounded-full">
-              <User className="w-5 h-5 text-gray-700" />
-            </button>
-            <span className="text-sm text-gray-700 cursor-pointer hover:underline">Register</span>
-            <span className="text-sm text-gray-400">or</span>
-            <span className="text-sm text-gray-700 cursor-pointer hover:underline">Sign in</span>
-          </div>
+          {
+            !isAuthenticated ?
+              <div className="flex items-center space-x-3">
+                <button className="p-2 hover:bg-gray-100 rounded-full">
+                  <User className="w-5 h-5 text-gray-700" />
+                </button>
+                <Link to="/signup" className="text-sm text-gray-700 cursor-pointer hover:underline">Register</Link>
+                <span className="text-sm text-gray-400">or</span>
+                <Link to="/signin" className="text-sm text-gray-700 cursor-pointer hover:underline">Sign in</Link>
+              </div>
+              : <Link to="/profile" className="relative">
+                <img
+                  className="w-9 h-9 rounded-full border-2 border-amber-100 hover:scale-105 transition-transform"
+                  src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
+                  alt="user"
+                />
+              </Link>
+          }
         </div>
       </header>
 
@@ -86,7 +98,7 @@ export const Header = () => {
           />
 
           {/* Sidebar Panel */}
-          <div className="relative z-50 w-80 bg-white h-full shadow-xl rounded-md overflow-y-auto">
+          <div className="relative z-50 w-[40%] bg-white h-full shadow-xl rounded-md overflow-y-auto">
             <div className="flex justify-between items-center px-4 py-3 border-b">
               <h2 className="text-lg font-semibold text-gray-800">Problem List</h2>
               <button
@@ -107,13 +119,12 @@ export const Header = () => {
                   <div className="flex justify-between items-center">
                     <span className="font-medium text-gray-800">{prob.title}</span>
                     <span
-                      className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                        prob.difficulty === 'Easy'
-                          ? 'bg-green-100 text-green-700'
-                          : prob.difficulty === 'Medium'
+                      className={`text-xs font-semibold px-2 py-0.5 rounded-full ${prob.difficulty === 'Easy'
+                        ? 'bg-green-100 text-green-700'
+                        : prob.difficulty === 'Medium'
                           ? 'bg-yellow-100 text-yellow-700'
                           : 'bg-red-100 text-red-700'
-                      }`}
+                        }`}
                     >
                       {prob.difficulty}
                     </span>
