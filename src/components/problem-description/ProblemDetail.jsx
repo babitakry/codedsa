@@ -2,7 +2,7 @@ import React from 'react'
 
 const ProblemDetail = ({ problem }) => {
     return (
-        <div className="w-full border border-gray-200">
+        <div className="w-full border border-gray-200 rounded-md">
             <div className="p-3 overflow-y-auto ">
                 <div className="space-y-8">
                     <div>

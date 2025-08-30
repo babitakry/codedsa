@@ -117,7 +117,7 @@ const Problems = () => {
 
           {/* Results Summary */}
           {(searchTerm || sortLevel) && (
-            <div className="mt-6 pt-4 border-t border-gray-200">
+            <div className="mt-6 pt-4 border border-gray-200">
               <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600">
                 <span>Filtering:</span>
                 {searchTerm && (
