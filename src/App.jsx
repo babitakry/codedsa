@@ -16,22 +16,25 @@ import About from './pages/About';
 import { Header } from './components/problem-description/Header';
 import ProtectedRoute from './components/protected/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
+import AdminProtectedRoute from './components/protected/AdminProtected';
 
 // Admin layout with sidebar
 const AdminLayout = () => {
   return (
     <SidebarProvider>
-      <div className="w-full flex">
-        <AppSidebar />
-        <main className="flex-1">
-          <SidebarTrigger className="absolute top-2"/>
-          <Routes>
-            <Route path="users" element={<AdminUsers/>} />
-            <Route path="problems" element={<AdminProblems />} />
-            <Route path="problems/add" element={<AdminAddProblem/>}/>
-          </Routes>
-        </main>
-      </div>
+      <AdminProtectedRoute>
+        <div className="w-full flex">
+          <AppSidebar />
+          <main className="flex-1">
+            <SidebarTrigger className="absolute top-2" />
+            <Routes>
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="problems" element={<AdminProblems />} />
+              <Route path="problems/add" element={<AdminAddProblem />} />
+            </Routes>
+          </main>
+        </div>
+      </AdminProtectedRoute>
     </SidebarProvider>
   );
 };
@@ -57,7 +60,7 @@ function App() {
         <Route path="/problems">
           <Route index element={<Problems />} />
           <Route path=":name" element={<QuestionDescription />} />
-          <Route path=":slug" element={<Header/>} />
+          <Route path=":slug" element={<Header />} />
         </Route>
         <Route path="/admin/*" element={<AdminLayout />} />
       </Routes>

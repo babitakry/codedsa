@@ -13,7 +13,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <img src={CodeBite} className="h-9 w-9 rounded-full" alt="Logo" />
-          <span className="text-2xl font-bold text-amber-100">Codebite</span>
+          <span className="text-2xl font-bold text-amber-100">CodeDSA</span>
         </Link>
 
         {/* Navigation Links */}

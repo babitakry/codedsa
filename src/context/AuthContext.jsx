@@ -7,6 +7,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
@@ -38,6 +39,10 @@ export const AuthProvider = ({ children }) => {
                 if (res?.status == 200) {
                     setIsAuthenticated(true);
                     setLoading(false);
+
+                    if(res?.data?.role==="ADMIN"){
+                        setIsAdmin(true);
+                    }
                 }
             } catch (error) {
                 console.log("fasfdjkajdsfkasdf")
@@ -53,22 +58,24 @@ export const AuthProvider = ({ children }) => {
     }, [])
 
 
-    const login = (token)=>{
+    const login = (token,role)=>{
         if(!token)
             return ;
     
         localStorage.setItem("token",token);
         setIsAuthenticated(true);
-        
+        if(role==="ADMIN")
+            setIsAdmin(true);
     }
 
     const onLogout = ()=>{
         localStorage.removeItem("token");
         setIsAuthenticated(false);
+        setIsAdmin(false);
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, loading, login, onLogout }}>
+        <AuthContext.Provider value={{ isAuthenticated, loading, login, onLogout ,isAdmin}}>
             {children}
         </AuthContext.Provider>
     )

@@ -104,7 +104,8 @@ export const loginController = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Logged in successfully!!",
-            token: jwtdata
+            token: jwtdata,
+            role: payload.role
         });
 
     } catch (error) {
@@ -125,7 +126,7 @@ export const verifyTokenController = async ( req, res) => {
                 message: "Missing user id"
             });
         }
-        const userExist = User.findById(user_id);
+        const userExist = await User.findById(user_id);
         if(!userExist){
             return res.status(404).json({
                 success: false,
@@ -134,7 +135,8 @@ export const verifyTokenController = async ( req, res) => {
         }
         return res.status(200).json({
             success: true,
-            message: "User Authentication successful !"
+            message: "User Authentication successful !",
+            role: userExist.role
         })
     }
     catch(error){
