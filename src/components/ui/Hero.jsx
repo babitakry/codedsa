@@ -16,11 +16,11 @@ const Hero = () => {
                 <div className="hidden sm:mb-8 sm:flex sm:justify-center">
                     <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                         Get started with our  and start solving problems.
-                        <a href="#" className="font-semibold text-primary">
+                        <Link to="/about" className="font-semibold text-primary">
                             <span className="absolute inset-0" aria-hidden="true"></span> 
                             Learn more
                             <span aria-hidden="true">&rarr;</span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
 
