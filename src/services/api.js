@@ -1,5 +1,5 @@
-// const BASE_URL="https://codedsa.onrender.com/api/v1/"
-const BASE_URL="http://localhost:3000/api/v1/"
+const BASE_URL="https://codedsa.onrender.com/api/v1/"
+// const BASE_URL="http://localhost:3000/api/v1/"
 
 export const authEndpoints={
     LOGIN_API:BASE_URL+"auth/login",
