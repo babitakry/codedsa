@@ -5,11 +5,12 @@ import EditProfile from "../components/editprofile/EditProfile";
 import { userEndpoints } from "@/services/api";
 import axios from "axios";
 import { useAuth } from "@/context/AuthContext";
+import { Globe, Github, Linkedin, Twitter } from "lucide-react"; // icons for socials
 
 const Profile = () => {
     const [user, setUser] = useState(null);
     const [open, setOpen] = useState(false);
-    const {onLogout} = useAuth();
+    const { onLogout } = useAuth();
 
     const fetchUserProfile = async () => {
         try {
@@ -28,10 +29,23 @@ const Profile = () => {
         }
     };
 
-
     useEffect(() => {
         fetchUserProfile();
     }, [open]);
+
+    // --- helper: detect social icon
+    const getSocialIcon = (platform) => {
+        switch (platform?.toLowerCase()) {
+            case "github":
+                return <Github className="w-5 h-5 text-gray-700" />;
+            case "linkedin":
+                return <Linkedin className="w-5 h-5 text-blue-700" />;
+            case "twitter":
+                return <Twitter className="w-5 h-5 text-sky-500" />;
+            default:
+                return <Globe className="w-5 h-5 text-gray-500" />;
+        }
+    };
 
     return (
         <div className="max-w-5xl mx-auto my-10 px-6 min-h-[80vh]">
@@ -57,9 +71,15 @@ const Profile = () => {
                         <DialogTrigger asChild>
                             <Button>Edit Profile</Button>
                         </DialogTrigger>
-                        <EditProfile user={user} onProfileUpdated={setUser} setOpen={setOpen} />
+                        <EditProfile
+                            user={user}
+                            onProfileUpdated={setUser}
+                            setOpen={setOpen}
+                        />
                     </Dialog>
-                    <Button onClick={onLogout} className="bg-red-500">Logout</Button>
+                    <Button onClick={onLogout} className="bg-red-500">
+                        Logout
+                    </Button>
                 </div>
             </div>
 
@@ -92,49 +112,67 @@ const Profile = () => {
             </div>
 
             {/* --- Info Section --- */}
-            <div className="bg-white border rounded-xl shadow-sm mt-6 p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-white border rounded-xl shadow-sm mt-6 p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <p className="text-sm text-gray-500">Country</p>
-                    <p className="font-medium text-gray-700">{user?.country || "Not Provided"}</p>
+                    <p className="font-medium text-gray-700">
+                        {user?.country || "Not Provided"}
+                    </p>
                 </div>
                 <div>
                     <p className="text-sm text-gray-500">College</p>
-                    <p className="font-medium text-gray-700">{user?.college || "Not Provided"}</p>
+                    <p className="font-medium text-gray-700">
+                        {user?.college || "Not Provided"}
+                    </p>
                 </div>
                 <div>
-                    <p className="text-sm text-gray-500">Languages Used</p>
-                    <p className="font-medium text-gray-700">
-                        {user?.language_used?.length ? user.language_used.map((lang) => {
-                            return <span>{lang}</span>
-                        }) : "Not Provided"}
-                    </p>
+                    <p className="text-sm text-gray-500 mb-2">Languages Used</p>
+                    <div className="flex flex-wrap gap-2">
+                        {user?.language_used?.length ? (
+                            user.language_used.map((lang, idx) => (
+                                <span
+                                    key={idx}
+                                    className="px-3 py-1 text-sm rounded-full bg-blue-50 text-blue-700 border border-blue-200"
+                                >
+                                    {lang}
+                                </span>
+                            ))
+                        ) : (
+                            <span className="text-gray-400">Not Provided</span>
+                        )}
+                    </div>
                 </div>
             </div>
 
             {/* --- Social Links --- */}
             <div className="bg-white border rounded-xl shadow-sm mt-6 p-6">
-                <h2 className="text-lg font-semibold text-gray-800 mb-4">Social Links</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {
-                        user?.social_links?.map((social) => {
-                            return (
-                                <div>
+                <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                    Social Links
+                </h2>
+                {user?.social_links?.length ? (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {user.social_links.map((social, idx) => (
+                            <a
+                                key={idx}
+                                href={social?.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-3 p-3 border rounded-lg hover:shadow-md transition"
+                            >
+                                {getSocialIcon(social?.platform)}
+                                <div className="min-w-0"> {/* prevents overflow */}
                                     <p className="text-sm text-gray-500">{social?.platform}</p>
-
-                                    <a
-                                        href={social?.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-gray-800 hover:underline"
-                                    >
+                                    <p className="text-sm font-medium text-blue-600 truncate max-w-[200px] md:max-w-[250px] lg:max-w-[300px]">
                                         {social?.url}
-                                    </a>
-
+                                    </p>
                                 </div>
-                            )
-                        })
-                    }
-                </div>
+                            </a>
+
+                        ))}
+                    </div>
+                ) : (
+                    <p className="text-gray-400">No social links added</p>
+                )}
             </div>
         </div>
     );
