@@ -50,15 +50,16 @@ const Profile = () => {
     return (
         <div className="max-w-5xl mx-auto my-10 px-6 min-h-[80vh]">
             {/* --- Header Section --- */}
-            <div className="flex items-center justify-between bg-white border border-gray-300 rounded-xl shadow-sm p-6">
-                <div className="flex items-center gap-6">
+            <div className="flex flex-col md:flex-row items-center md:items-start justify-between bg-white border border-gray-300 rounded-xl shadow-sm p-6 gap-6">
+                {/* Left Section */}
+                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 text-center sm:text-left">
                     <img
                         src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
                         alt="user"
-                        className="w-28 h-28 rounded-full border-2 border-gray-200 shadow-sm"
+                        className="w-20 h-20 sm:w-28 sm:h-28 rounded-full border-2 border-gray-200 shadow-sm"
                     />
                     <div>
-                        <h1 className="text-2xl font-semibold text-gray-800">
+                        <h1 className="text-xl sm:text-2xl font-semibold text-gray-800">
                             {user?.username || "Loading..."}
                         </h1>
                         <p className="text-sm text-gray-500">
@@ -66,10 +67,12 @@ const Profile = () => {
                         </p>
                     </div>
                 </div>
-                <div className="flex flex-col space-y-2">
+
+                {/* Right Section (Buttons in row, small size) */}
+                <div className="flex flex-row gap-3">
                     <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
-                            <Button>Edit Profile</Button>
+                            <Button className="px-3 py-2 text-sm">Edit Profile</Button>
                         </DialogTrigger>
                         <EditProfile
                             user={user}
@@ -77,11 +80,16 @@ const Profile = () => {
                             setOpen={setOpen}
                         />
                     </Dialog>
-                    <Button onClick={onLogout} className="bg-red-500">
+                    <Button
+                        onClick={onLogout}
+                        className="bg-red-500 px-3 py-2 text-sm"
+                    >
                         Logout
                     </Button>
                 </div>
             </div>
+
+
 
             {/* --- Stats Section --- */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">

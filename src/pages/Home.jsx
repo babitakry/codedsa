@@ -6,10 +6,11 @@ import Footer from '../components/ui/Footer'
 
 const Home = () => {
   return (
-    <div>
-        <Hero />
-        <Feature />
+    <div className="pt-10 sm:pt-0">
+      <Hero />
+      <Feature />
     </div>
+
   )
 }
 

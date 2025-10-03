@@ -61,109 +61,97 @@ const Problems = () => {
   }
 
   return (
-    <div className='max-w-6xl mx-auto min-h-screen'>
-      <div className="max-w-4xl mx-auto pt-3">
+    <div className="max-w-6xl mx-auto min-h-screen px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto pt-3 px-4 sm:px-6 lg:px-8">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center mb-6 sm:mb-8 tracking-tight">
+          Problems
+        </h2>
 
-        <h2 className="text-3xl font-bold text-gray-800 text-center mb-8 tracking-tight">Problems List</h2>
-
-        {/* Search & Sort */}
-        <div className="bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-xl p-8 mb-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
-            {/* Search Input */}
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-800 flex items-center gap-2" htmlFor="search">
-                <Search className="w-4 h-4 text-indigo-600" />
-                Search by Title
-              </label>
-              <div className="relative">
-                <input
-                  id="search"
-                  type="text"
-                  placeholder="e.g. Two Sum, Binary Tree..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 pl-11 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all duration-200 bg-white hover:border-gray-300"
-                />
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              </div>
-            </div>
-
-            {/* Sort Dropdown */}
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-800 flex items-center gap-2" htmlFor="sort">
-                <Filter className="w-4 h-4 text-indigo-600" />
-                Filter by Difficulty
-              </label>
-              <div className="relative">
-                <select
-                  id="sort"
-                  value={sortLevel}
-                  onChange={(e) => setSortLevel(e.target.value)}
-                  className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 pr-10 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all duration-200 bg-white hover:border-gray-300 appearance-none cursor-pointer"
-                >
-                  <option value="">All Levels</option>
-                  <option value="Easy"> Easy</option>
-                  <option value="Medium"> Medium</option>
-                  <option value="Hard"> Hard</option>
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
-              </div>
-            </div>
+        {/* Search & Filter - LeetCode style */}
+        <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-4 border-b border-gray-200 pb-4 mb-6">
+          {/* Search Input */}
+          <div className="relative w-full sm:w-1/2">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              id="search"
+              type="text"
+              placeholder="Search problems by title..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm sm:text-base"
+            />
           </div>
 
-          {/* Results Summary */}
-          {(searchTerm || sortLevel) && (
-            <div className="mt-6 pt-4 border border-gray-200">
-              <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600">
-                <span>Filtering:</span>
-                {searchTerm && (
-                  <span className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full font-medium">"{searchTerm}"</span>
-                )}
-                {sortLevel && (
-                  <span className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full font-medium">
-                    {sortLevel === "Easy"}
-                    {sortLevel === "Medium"}
-                    {sortLevel === "Hard"}
-                    {sortLevel}
-                  </span>
-                )}
-                {(searchTerm || sortLevel) && (
-                  <button
-                    onClick={() => {
-                      setSearchTerm("")
-                      setSortLevel("")
-                    }}
-                    className="text-indigo-600 hover:text-indigo-800 font-medium ml-2 transition-colors duration-200"
-                  >
-                    Clear all
-                  </button>
-                )}
-              </div>
+          {/* Sort Dropdown */}
+          <div className="relative w-full sm:w-44">
+            <select
+              id="sort"
+              value={sortLevel}
+              onChange={(e) => setSortLevel(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm sm:text-base cursor-pointer appearance-none"
+            >
+              <option value="">All Difficulties</option>
+              <option value="Easy">Easy</option>
+              <option value="Medium">Medium</option>
+              <option value="Hard">Hard</option>
+            </select>
+            <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+              <svg
+                className="w-4 h-4 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
             </div>
-          )}
+          </div>
         </div>
-      </div>
-      {/* Problems List */}
-      <div className='mt-4'>
-        {problems.length > 0 ? (
-          problems.map((problem, ind) => (
-            <Question
-              index={ind}
-              key={problem._id}
-              problem={problem}
-            />
-          ))
-        ) : (
-          <p className='text-center text-gray-500 mt-6'>No problems found.</p>
+
+        {/* Results Summary */}
+        {(searchTerm || sortLevel) && (
+          <div className="flex flex-wrap items-center gap-2 mb-6 text-sm text-gray-600">
+            <span>Filtering:</span>
+            {searchTerm && (
+              <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full font-medium text-xs sm:text-sm">
+                "{searchTerm}"
+              </span>
+            )}
+            {sortLevel && (
+              <span className="bg-gray-100 text-gray-800 px-2 py-1 rounded-full font-medium text-xs sm:text-sm">
+                {sortLevel}
+              </span>
+            )}
+            <button
+              onClick={() => {
+                setSearchTerm("");
+                setSortLevel("");
+              }}
+              className="text-indigo-600 hover:text-indigo-800 font-medium ml-2 transition-colors duration-200 text-xs sm:text-sm"
+            >
+              Clear all
+            </button>
+          </div>
         )}
       </div>
 
-      {/* Pagination (static for now) */}
-      <div className='mt-4'>
+
+
+      {/* Problems List */}
+      <div className="mt-4 space-y-4 sm:space-y-6">
+        {problems.length > 0 ? (
+          problems.map((problem, ind) => (
+            <Question index={ind} key={problem._id} problem={problem} />
+          ))
+        ) : (
+          <p className="text-center text-gray-500 mt-6 text-sm sm:text-base">
+            No problems found.
+          </p>
+        )}
+      </div>
+
+      {/* Pagination */}
+      <div className="mt-6 sm:mt-8 flex justify-center">
         <Pagination>
           <PaginationContent>
             <PaginationItem>
@@ -182,6 +170,7 @@ const Problems = () => {
         </Pagination>
       </div>
     </div>
+
   );
 };
 

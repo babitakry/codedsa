@@ -14,10 +14,7 @@ export const Header = () => {
 
   const fetch_problem = async () => {
     try {
-      const response = await axios({
-        method: 'GET',
-        url: problemEndpoints.GET_ALL_PROBLEM,
-      });
+      const response = await axios.get(problemEndpoints.GET_ALL_PROBLEM);
       setProblem(response.data.data);
     } catch (error) {
       console.error('Error fetching problems:', error);
@@ -30,9 +27,7 @@ export const Header = () => {
 
   const handleNavigate = (title, problemId) => {
     setShowSidebar(false);
-    navigate(`/problems/${title}`, {
-      state: problemId,
-    });
+    navigate(`/problems/${title}`, { state: problemId });
   };
 
   return (
@@ -41,50 +36,50 @@ export const Header = () => {
         <div className="flex items-center justify-between relative">
 
           {/* Left Section */}
-          <div className="flex items-center space-x-4">
-            <Link to="/" className="flex items-center space-x-2">
-              <img src={CodeBite} className="h-8 w-8 rounded-full" alt="Logo" />
-              <span className="font-semibold text-lg text-indigo-600">CodeBite</span>
+          <div className="flex items-center space-x-2 sm:space-x-4">
+            <Link to="/" className="flex items-center space-x-1 sm:space-x-2">
+              <img src={CodeBite} className="h-7 w-7 sm:h-8 sm:w-8 rounded-full" alt="Logo" />
+              <span className="font-semibold text-md sm:text-lg text-black">CodeDSA</span>
             </Link>
 
             <button
-              className="flex items-center space-x-2 px-3 py-1 hover:bg-gray-100 rounded transition"
+              className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1 hover:bg-gray-100 rounded transition"
               onClick={() => setShowSidebar(true)}
             >
               <List className="w-4 h-4" />
-              <span className="text-sm font-medium">Problems</span>
+              <span className="text-xs sm:text-sm font-medium">Problems</span>
             </button>
           </div>
 
           {/* Center Section */}
-          <div className="absolute left-1/2 -translate-x-1/2 flex space-x-4">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-1.5 rounded-lg text-sm font-medium transition">
+          <div className="absolute left-1/2 -translate-x-1/2 hidden sm:flex space-x-2 sm:space-x-4">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-5 py-1 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition">
               Run
             </button>
-            <button className="bg-green-600 hover:bg-green-700 text-white px-5 py-1.5 rounded-lg text-sm font-medium transition">
+            <button className="bg-green-600 hover:bg-green-700 text-white px-3 sm:px-5 py-1 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition">
               Submit
             </button>
           </div>
 
           {/* Right Section */}
-          {
-            !isAuthenticated ?
-              <div className="flex items-center space-x-3">
-                <button className="p-2 hover:bg-gray-100 rounded-full">
-                  <User className="w-5 h-5 text-gray-700" />
-                </button>
-                <Link to="/signup" className="text-sm text-gray-700 cursor-pointer hover:underline">Register</Link>
-                <span className="text-sm text-gray-400">or</span>
-                <Link to="/signin" className="text-sm text-gray-700 cursor-pointer hover:underline">Sign in</Link>
-              </div>
-              : <Link to="/profile" className="relative">
-                <img
-                  className="w-9 h-9 rounded-full border-2 border-amber-100 hover:scale-105 transition-transform"
-                  src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                  alt="user"
-                />
-              </Link>
-          }
+          {!isAuthenticated ? (
+            <div className="flex items-center space-x-1 sm:space-x-3 text-xs sm:text-sm">
+              <button className="p-1 sm:p-2 hover:bg-gray-100 rounded-full">
+                <User className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+              </button>
+              <Link to="/signup" className="hover:underline">Register</Link>
+              <span className="text-gray-400">or</span>
+              <Link to="/signin" className="hover:underline">Sign in</Link>
+            </div>
+          ) : (
+            <Link to="/profile" className="relative">
+              <img
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border-2 border-amber-100 hover:scale-105 transition-transform"
+                src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
+                alt="user"
+              />
+            </Link>
+          )}
         </div>
       </header>
 
@@ -93,12 +88,12 @@ export const Header = () => {
         <div className="fixed inset-0 z-40 flex">
           {/* Overlay */}
           <div
-            className="fixed inset-0 bg-black opacity-40"
+            className="fixed inset-0 bg-black opacity-40 sm:opacity-30"
             onClick={() => setShowSidebar(false)}
           />
 
           {/* Sidebar Panel */}
-          <div className="relative z-50 w-[40%] bg-white h-full shadow-xl rounded-md overflow-y-auto">
+          <div className="relative z-50 w-full sm:w-[40%] md:w-[30%] lg:w-[25%] bg-white h-full shadow-xl overflow-y-auto">
             <div className="flex justify-between items-center px-4 py-3 border-b">
               <h2 className="text-lg font-semibold text-gray-800">Problem List</h2>
               <button
@@ -113,18 +108,19 @@ export const Header = () => {
               {problem.map((prob) => (
                 <li
                   key={prob.id}
-                  className="p-4 hover:bg-indigo-50 cursor-pointer transition"
+                  className="p-3 sm:p-4 hover:bg-indigo-50 cursor-pointer transition"
                   onClick={() => handleNavigate(prob.title, prob._id)}
                 >
                   <div className="flex justify-between items-center">
-                    <span className="font-medium text-gray-800">{prob.title}</span>
+                    <span className="font-medium text-gray-800 text-xs sm:text-sm">{prob.title}</span>
                     <span
-                      className={`text-xs font-semibold px-2 py-0.5 rounded-full ${prob.difficulty === 'Easy'
-                        ? 'bg-green-100 text-green-700'
-                        : prob.difficulty === 'Medium'
+                      className={`text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full ${
+                        prob.difficulty === 'Easy'
+                          ? 'bg-green-100 text-green-700'
+                          : prob.difficulty === 'Medium'
                           ? 'bg-yellow-100 text-yellow-700'
                           : 'bg-red-100 text-red-700'
-                        }`}
+                      }`}
                     >
                       {prob.difficulty}
                     </span>
