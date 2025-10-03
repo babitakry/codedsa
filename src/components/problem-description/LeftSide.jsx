@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FileText, PenTool, Lightbulb, ClipboardList, Bot } from "lucide-react";
 import ProblemDetail from './ProblemDetail';
 import Chatbot from '@/pages/Chatbot';
 
 export const LeftSide = ({ activeTab, setActiveTab, problem }) => {
+  const [messageHistory, setMessageHistory] = useState([]); // {role: "system | user", message: "string"}
   console.log("Problem :", problem);
   const openChatAI = (tab) => {
     setActiveTab(tab);
@@ -66,7 +67,7 @@ export const LeftSide = ({ activeTab, setActiveTab, problem }) => {
         <p className="text-gray-700">Your past submissions will show up here.</p>
       </TabsContent>
       <TabsContent value="chat_ai">
-        <Chatbot problemId={problem?._id} />
+        <Chatbot problemId={problem?._id} messageHistory={messageHistory} setMessageHistory={setMessageHistory}/>
       </TabsContent>
     </div>
   </Tabs>

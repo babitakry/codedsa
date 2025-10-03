@@ -3,18 +3,21 @@ import 'dotenv/config';
 import { Problem } from '../models/problem.models.js';
 
 const chatbotController = async (req, res) => {
+    console.log("Chatbot Controller called");
     const { prompt, problemId } = req.body;
     const apiKey = process.env.MISTRAL_API_KEY;
     const client = new Mistral({ apiKey });
 
     try {
         if (!prompt || !problemId) {
+            console.log("Please enter your question !!");
             return res.status(400).json({
                 message: "Please enter your question !!"
             });
         }
 
         const problem = await Problem.findById(problemId);
+        console.log("Find problem", problem);
 
         res.setHeader("Content-Type", "text/event-stream");
         res.setHeader("Cache-Control", "no-cache");
@@ -41,7 +44,8 @@ const chatbotController = async (req, res) => {
         res.end();
 
     } catch (error) {
-        console.error(error);
+
+        console.log("Chatbot Controller: ",error);
         res.status(500).json({
             message: "Failed to fetch data"
         });
