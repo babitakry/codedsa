@@ -1,9 +1,20 @@
+import Loading from "@/components/auth/Loading";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle2, Target, Rocket, HelpCircle } from "lucide-react"
+import { CheckCircle2, Target, Rocket, HelpCircle, Loader } from "lucide-react"
+import { useEffect, useState } from "react"
 
 export default function About() {
-  return (
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2000)
+      return () => clearTimeout(timer)
+    }, [])
+
+  return !loading ?(
     <main className="container mx-auto py-12 px-4 md:px-6 lg:px-8 max-w-6xl">
       {/* Hero Section */}
       <section className="text-center mb-16 bg-white dark:bg-gray-950 rounded-xl shadow-md p-6 md:p-10">
@@ -148,5 +159,6 @@ export default function About() {
         </Card>
       </section>
     </main>
-  )
+  ) : <Loading />
+  
 }

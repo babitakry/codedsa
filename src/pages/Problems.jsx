@@ -12,6 +12,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { problemEndpoints } from '@/services/api';
+import Loading from '@/components/auth/Loading';
 
 const Problems = () => {
   const [problems, setProblems] = useState([]);
@@ -47,7 +48,7 @@ const Problems = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <p className="text-lg">Loading problems...</p>
+        <Loading />
       </div>
     );
   }
