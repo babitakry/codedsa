@@ -14,7 +14,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <img src={CodeBite} className="h-9 w-9 rounded-full" alt="Logo" />
-          <span className="text-2xl font-bold text-black">𝐂𝐨𝐝𝐞𝐃𝐒𝐀</span>
+          <span className="text-2xl font-bold text-black">CodeDSA</span>
         </Link>
 
         {/* Desktop Links */}

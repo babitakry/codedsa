@@ -88,7 +88,7 @@ const Signin = () => {
                             className="w-full py-2.5 px-5 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
                         >
                             {
-                                isSigning ? <Loading /> : "Sign in"
+                                isSigning ? "Signing" : "Sign in"
                             }
                         </button>
                         <p className="text-sm text-center text-gray-500 dark:text-gray-400">
