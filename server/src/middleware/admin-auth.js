@@ -16,6 +16,7 @@ export const adminauthMiddleware = (req, res, next) => {
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     console.log("Payload", payload);
+    
     if (payload.data.role !== "ADMIN") {
       return res.status(403).json({
         success: false,

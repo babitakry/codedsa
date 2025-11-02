@@ -12,7 +12,7 @@ export const signupController = async (req, res) => {
         // 2. Data Validation
         if (!username || !password || !email) {
             return res.status(400).json({ //bad request == 400
-                sucess: false,
+                success: false,
                 message: "Missing Required data"
             })
         }
@@ -32,7 +32,7 @@ export const signupController = async (req, res) => {
         // We will use bcrypt -> bcrypt is used to encrypt the data
         const saltRounds = 10;
         const hashed_password = await bcrypt.hash(password, saltRounds);
-        console.log("hashed_pasword", hashed_password);
+        console.log("hashed_password", hashed_password);
 
         // 6. now save the entry in the database
         const user = new User({
@@ -54,7 +54,7 @@ export const signupController = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({
-            sucess: false,
+            success: false,
             message: "Internal Server Error in Signing Up User"
         })
     }

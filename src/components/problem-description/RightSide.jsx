@@ -9,6 +9,14 @@ import {
 } from "lucide-react"
 import axios from "axios";
 
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+
 const RightSide = ({ setSize, initialCode }) => {
     const [language, setLanguage] = useState(initialCode && initialCode[0]?.lang);
     const [code, setCode] = useState("");
@@ -74,9 +82,23 @@ const RightSide = ({ setSize, initialCode }) => {
         <div className="w-full h-full flex flex-col rounded-2xl shadow-md border border-gray-200 overflow-hidden">
             {/* Top Toolbar */}
             <div className="border-b border-gray-200 p-3 bg-white flex items-center justify-between">
-                
+
                 {/* Language Selector */}
-                <div className="relative">
+                <Select>
+                    <SelectTrigger className="w-[180px] capitalize">
+                        <SelectValue placeholder="Select Language" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {initialCode && initialCode.map((obj, ind) => (
+                            <SelectItem key={ind} value={obj.lang} className="capitalize">
+                                {obj.lang}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+
+
+                {/* <div className="relative">
                     <select
                         value={language}
                         onChange={changeLanguage}
@@ -89,7 +111,8 @@ const RightSide = ({ setSize, initialCode }) => {
                     <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none text-gray-500">
                         <ChevronDown size={16} />
                     </div>
-                </div>
+                </div>  */}
+
 
                 {/* Action Buttons for larger screens */}
                 <div className="hidden sm:flex items-center space-x-2">
