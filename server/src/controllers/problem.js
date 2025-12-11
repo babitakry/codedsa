@@ -20,7 +20,9 @@ export const createProblem = async (req, res) => {
 
 
     if (!sno || !title || !difficulty || !topic || !description || !constraints || !examples || !test_case || !boiler_plate_code) {
-      return res.status(400).json({ error: "All fields are required" });
+      return res.status(400).json({ 
+        error: "All fields are required" 
+      });
     }
 
     const check_title = await Problem.findOne({ title: title });
@@ -138,7 +140,7 @@ export const updateProblem = async (req, res) => {
       test_case: test_case,
       constraints: constraints,
       boiler_plate_code: boiler_plate_code
-    });
+    },{new: true});
 
     await updatedProblem.save();
 
@@ -147,7 +149,6 @@ export const updateProblem = async (req, res) => {
         message: "Problem not found"
       });
     }
-
     return res.status(201).json({
       success: true,
       message: "Problem updated successfully",

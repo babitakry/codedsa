@@ -18,17 +18,19 @@ import {
 } from "@/components/ui/select"
 
 const RightSide = ({ setSize, initialCode }) => {
-    const [language, setLanguage] = useState(initialCode && initialCode[0]?.lang);
+    const [language, setLanguage] = useState("");
     const [code, setCode] = useState("");
 
     useEffect(() => {
         if (initialCode) {
             setCode(initialCode[0]?.code);
+            setLanguage(initialCode[0]?.lang)
         }
     }, [initialCode]);
 
-    const changeLanguage = (e) => {
-        const lang = e.target.value;
+    const changeLanguage = (lang) => {
+
+        console.log("Lang", lang);
         setLanguage(lang);
 
         for (let i = 0; i < initialCode.length; i++) {
@@ -84,13 +86,16 @@ const RightSide = ({ setSize, initialCode }) => {
             <div className="border-b border-gray-200 p-3 bg-white flex items-center justify-between">
 
                 {/* Language Selector */}
-                <Select>
+                <Select onValueChange={changeLanguage} value={language}>
                     <SelectTrigger className="w-[180px] capitalize">
                         <SelectValue placeholder="Select Language" />
                     </SelectTrigger>
                     <SelectContent>
                         {initialCode && initialCode.map((obj, ind) => (
-                            <SelectItem key={ind} value={obj.lang} className="capitalize">
+                            <SelectItem
+                                key={ind}
+                                value={obj.lang}
+                                className="capitalize">
                                 {obj.lang}
                             </SelectItem>
                         ))}
