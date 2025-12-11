@@ -10,15 +10,15 @@ export const updateuserController = async (req, res) => {
     const user_id = req.user.data.user_id;
 
     try {
-        const { 
+        const {
             username,
-            summary, 
-            country, 
-            college, 
-            language_used, 
-            social_links, 
+            summary,
+            country,
+            college,
+            language_used,
+            social_links,
         } = data;
-        
+
         const updateuser = await User.findByIdAndUpdate(user_id, {
             username: username,
             summary: summary,
@@ -33,39 +33,40 @@ export const updateuserController = async (req, res) => {
             success: true,
             message: "User Profile Updated Successfully",
             data: data
-        }) ;
+        });
     }
-    catch(error){
+    catch (error) {
         console.log(error);
         return res.status(500).json({
-            sucess:false,
-            message:"Internal Server Error in Updating User......"
+            sucess: false,
+            message: "Internal Server Error in Updating User......"
         });
     }
 }
 
-export const getUserController = async(req, res) => {
+export const getUserController = async (req, res) => {
     const user_id = req.user.data.user_id;
 
-    try{
+    try {
         const user = await User.findById(user_id);
-        if(!user){
+        if (!user) {
             return res.status(404).json({
-                success:false,
-                message:"User not Exist !!"
+                success: false,
+                message: "User not Exist !!"
             })
         }
+        user.password = null;
         return res.status(201).json({
             success: true,
             message: "User Found Successfully !",
             data: user
         })
     }
-    catch(error){
+    catch (error) {
         console.log(error);
         return res.status(500).json({
-            sucess:false,
-            message:"Internal Server Error in Updating User......"
+            sucess: false,
+            message: "Internal Server Error in Updating User......"
         });
     }
 }
