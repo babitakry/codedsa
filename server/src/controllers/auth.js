@@ -89,15 +89,11 @@ export const loginController = async (req, res) => {
             email: user_exist.email,
             role: user_exist.role //  make sure your User model has a `role` field
         };
-        
 
-        const jwtdata = jwt.sign(
-            {
-                exp: Math.floor(Date.now() / 1000) + 60 * 60, // 1 hour expiry
-                data: payload
-            },
-            process.env.JWT_SECRET
-        );
+
+        const jwtdata = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXPIRES_IN || "2d",
+        });
 
         console.log("jwt", jwtdata);
 
@@ -117,17 +113,17 @@ export const loginController = async (req, res) => {
     }
 };
 
-export const verifyTokenController = async ( req, res) => {
-    try{
+export const verifyTokenController = async (req, res) => {
+    try {
         const user_id = req.user.data.user_id;
-        if(!user_id){
+        if (!user_id) {
             return res.status(404).json({
                 success: false,
                 message: "Missing user id"
             });
         }
         const userExist = await User.findById(user_id);
-        if(!userExist){
+        if (!userExist) {
             return res.status(404).json({
                 success: false,
                 message: "User Not Exist!"
@@ -139,7 +135,7 @@ export const verifyTokenController = async ( req, res) => {
             role: userExist.role
         })
     }
-    catch(error){
+    catch (error) {
         console.log("VerifyTokenController", error);
         return res.status(500).json({
             success: false,

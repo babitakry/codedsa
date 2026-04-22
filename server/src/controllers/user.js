@@ -69,4 +69,4 @@ export const getUserController = async (req, res) => {
             message: "Internal Server Error in Updating User......"
         });
     }
-}
+}   
