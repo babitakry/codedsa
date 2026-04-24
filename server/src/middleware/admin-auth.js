@@ -2,10 +2,10 @@ import jwt from "jsonwebtoken";
 
 export const adminauthMiddleware = (req, res, next) => {
   try {
-    const token =
-      req.body?.token ||
-      req.cookies?.token ||
-      req.header("Authorization")?.replace("Bearer ", "");
+    let token;
+    if (req.headers.authorization?.startsWith("Bearer")) {
+      token = req.headers.authorization.split(" ")[1];
+    }
 
     if (!token) {
       return res.status(400).json({
@@ -16,8 +16,8 @@ export const adminauthMiddleware = (req, res, next) => {
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     console.log("Payload", payload);
-    
-    if (payload.data.role !== "ADMIN") {
+
+    if (payload.role !== "ADMIN") {
       return res.status(403).json({
         success: false,
         message: "Access denied. Admins only.",
