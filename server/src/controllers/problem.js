@@ -5,7 +5,7 @@ export const createProblem = async (req, res) => {
   try {
     const adminUser = req.user; // comes from authMiddleware
     console.log("Admin user creating problem:", adminUser);
-    
+
     const {
       sno,
       title,
@@ -20,8 +20,8 @@ export const createProblem = async (req, res) => {
 
 
     if (!sno || !title || !difficulty || !topic || !description || !constraints || !examples || !test_case || !boiler_plate_code) {
-      return res.status(400).json({ 
-        error: "All fields are required" 
+      return res.status(400).json({
+        error: "All fields are required"
       });
     }
 
@@ -132,27 +132,31 @@ export const updateProblem = async (req, res) => {
       boiler_plate_code
     } = data;
 
-    const updatedProblem = await Problem.findByIdAndUpdate(problem_id, {
-      difficulty: difficulty,
-      topic: topic,
-      description: description,
-      examples: examples,
-      test_case: test_case,
-      constraints: constraints,
-      boiler_plate_code: boiler_plate_code
-    },{new: true});
+    const existingProblem = await Problem.findById(problem_id);
 
-    await updatedProblem.save();
+    const updatedProblem = await Problem.findByIdAndUpdate(
+      problem_id,
+      {
+        difficulty: difficulty ?? existingProblem.difficulty,
+        topic: topic ?? existingProblem.topic,
+        description: description ?? existingProblem.description,
+        examples: examples ?? existingProblem.examples,
+        test_case: test_case ?? existingProblem.test_case,
+        constraints: constraints ?? existingProblem.constraints,
+        boiler_plate_code: boiler_plate_code ?? existingProblem.boiler_plate_code
+      },
+      { new: true }
+    );
 
     if (!updatedProblem) {
       return res.status(404).json({
         message: "Problem not found"
       });
     }
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
       message: "Problem updated successfully",
-      data: data
+      data: updatedProblem
     });
 
   }
@@ -165,7 +169,6 @@ export const updateProblem = async (req, res) => {
   }
 
 };
-
 
 export const deleteProblem = async (req, res) => {
   const params = req.params;
@@ -184,8 +187,7 @@ export const deleteProblem = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "Problem deleted successfully",
-      data: deletedProblem
+      message: "Problem deleted successfully"
     });
   } catch (error) {
     console.log("Error while deleting problem:", error.message);
