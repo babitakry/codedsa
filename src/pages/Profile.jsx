@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import EditProfile from "../components/editprofile/EditProfile";
+import EditProfileModal from "@/components/profile/EditProfileModal";
 import { userEndpoints } from "@/services/api";
 import axios from "axios";
 import { useAuth } from "@/context/AuthContext";
@@ -75,9 +75,8 @@ const Profile = () => {
                                 Edit Profile
                             </Button>
                         </DialogTrigger>
-                        <EditProfile
+                        <EditProfileModal
                             user={user}
-                            onProfileUpdated={setUser}
                             setOpen={setOpen}
                         />
                     </Dialog>

@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import Hero from '../components/ui/Hero'
-import Feature from '../components/ui/Feature'
-import Loading from '@/components/auth/Loading'
+import React, { useEffect, useState } from 'react';
+import Hero from '@/components/home/Hero';
+import Feature from '@/components/home/Feature';
+import Loading from '@/components/common/Loading';
 
 const Home = () => {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoading(false)
-    }, 300)
-    return () => clearTimeout(timer)
-  }, [])
+      setLoading(false);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   if (loading) {
-    return <Loading />
+    return <Loading />;
   }
 
   return (
@@ -22,7 +22,7 @@ const Home = () => {
       <Hero />
       <Feature />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

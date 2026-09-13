@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
-import { chatbotEndpoinst } from "@/services/api";
+import { chatbotEndpoints, chatbotEndpoinst } from "@/services/api";
 
 // ChatGPT-Style Code Block Component with full Syntax Highlighting
 const CodeBlock = ({ language, code }) => {
@@ -77,14 +77,11 @@ const preprocessMarkdown = (content) => {
   const parts = content.split(codeBlockRegex);
 
   for (let p = 0; p < parts.length; p++) {
-    // Skip code blocks
     if (parts[p].startsWith("```")) {
       continue;
     }
 
     let text = parts[p];
-
-    // Normalize cases where table row boundaries are collapsed onto a single line (e.g. "| Col1 | Col2 | |---|---| | Val1 | Val2 |")
     text = text.replace(/\|\s*\|/g, "|\n|");
 
     const lines = text.split("\n");
@@ -98,7 +95,6 @@ const preprocessMarkdown = (content) => {
       const isTableRow = trimmed.startsWith("|") && (trimmed.endsWith("|") || trimmed.includes("|"));
       const wasPrevTableRow = prevTrimmed.startsWith("|") && (prevTrimmed.endsWith("|") || prevTrimmed.includes("|"));
 
-      // Ensure a blank line before entering a table block from normal text
       if (isTableRow && !wasPrevTableRow && prevTrimmed !== "" && i > 0) {
         processedLines.push("");
       }
@@ -108,7 +104,6 @@ const preprocessMarkdown = (content) => {
       const nextTrimmed = i < lines.length - 1 ? lines[i + 1].trim() : "";
       const isNextTableRow = nextTrimmed.startsWith("|") && (nextTrimmed.endsWith("|") || nextTrimmed.includes("|"));
 
-      // Ensure a blank line after exiting a table block to normal text
       if (isTableRow && !isNextTableRow && nextTrimmed !== "" && i < lines.length - 1) {
         processedLines.push("");
       }
@@ -237,13 +232,11 @@ const Chatbot = ({ problemId, messageHistory = [], setMessageHistory }) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const chatRef = useRef(null);
 
-  // References for smooth typewriter streaming queue
   const targetTextRef = useRef("");
   const displayedTextRef = useRef("");
   const isNetworkDoneRef = useRef(false);
   const streamTimerRef = useRef(null);
 
-  // Clean up typewriter timer on component unmount
   useEffect(() => {
     return () => {
       if (streamTimerRef.current) clearInterval(streamTimerRef.current);
@@ -257,7 +250,6 @@ const Chatbot = ({ problemId, messageHistory = [], setMessageHistory }) => {
     const userPrompt = input.trim();
     setInput("");
 
-    // Add user question to history
     setMessageHistory((prev) => [...prev, { role: "user", message: userPrompt }]);
     setIsGenerating(true);
     setStreamingMessage("");
@@ -268,14 +260,12 @@ const Chatbot = ({ problemId, messageHistory = [], setMessageHistory }) => {
 
     if (streamTimerRef.current) clearInterval(streamTimerRef.current);
 
-    // Start smooth typewriter ticker (slowing down the stream in the UI)
     streamTimerRef.current = setInterval(() => {
       const target = targetTextRef.current;
       const current = displayedTextRef.current;
 
       if (current.length < target.length) {
         const diff = target.length - current.length;
-        // Pacing: smooth, visible typewriter pace
         let step = 1;
         if (diff > 180) step = 5;
         else if (diff > 80) step = 3;
@@ -286,7 +276,6 @@ const Chatbot = ({ problemId, messageHistory = [], setMessageHistory }) => {
         displayedTextRef.current = next;
         setStreamingMessage(next);
       } else if (isNetworkDoneRef.current) {
-        // Stream completed and all characters typed out
         clearInterval(streamTimerRef.current);
         streamTimerRef.current = null;
 
@@ -299,10 +288,11 @@ const Chatbot = ({ problemId, messageHistory = [], setMessageHistory }) => {
         setStreamingMessage("");
         setIsGenerating(false);
       }
-    }, 24); // ~40 characters per second smooth typing pace
+    }, 24);
 
     try {
-      const response = await fetch(chatbotEndpoinst.GET_CHATBOT, {
+      const endpoint = (chatbotEndpoints && chatbotEndpoints.GET_CHATBOT) || (chatbotEndpoinst && chatbotEndpoinst.GET_CHATBOT);
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: userPrompt, problemId }),
@@ -358,7 +348,6 @@ const Chatbot = ({ problemId, messageHistory = [], setMessageHistory }) => {
     }
   };
 
-  // Auto-scroll down smoothly as stream arrives
   useEffect(() => {
     chatRef.current?.scrollTo({
       top: chatRef.current.scrollHeight,

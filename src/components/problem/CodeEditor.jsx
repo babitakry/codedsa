@@ -18,7 +18,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 
-const RightSide = ({ setSize, initialCode }) => {
+const CodeEditor = ({ setSize, initialCode }) => {
     const [language, setLanguage] = useState("");
     const [code, setCode] = useState("");
     const { isDark } = useTheme();
@@ -186,4 +186,4 @@ const RightSide = ({ setSize, initialCode }) => {
     );
 };
 
-export default RightSide;
+export default CodeEditor;

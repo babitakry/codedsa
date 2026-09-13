@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FileText, ClipboardList, Bot, Sparkles, BookOpen } from "lucide-react";
+import { FileText, ClipboardList, Bot } from "lucide-react";
 import ProblemDetail from './ProblemDetail';
-import Chatbot from '@/pages/Chatbot';
+import Chatbot from '@/components/chatbot/Chatbot';
 
-export const LeftSide = ({ activeTab, setActiveTab, problem }) => {
+export const ProblemTabs = ({ activeTab, setActiveTab, problem }) => {
   const [messageHistory, setMessageHistory] = useState([]);
+
+  useEffect(() => {
+    // Reset or update when problem ID changes
+  }, [problem?._id]);
 
   return (
     <div className="w-full h-full flex flex-col rounded-lg border border-neutral-200 dark:border-[#333333] bg-white dark:bg-[#282828] shadow-xs overflow-hidden transition-colors">
@@ -63,3 +67,5 @@ export const LeftSide = ({ activeTab, setActiveTab, problem }) => {
     </div>
   );
 };
+
+export default ProblemTabs;

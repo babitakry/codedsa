@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import RightSide from "../components/problem-description/RightSide";
-import { LeftSide } from "../components/problem-description/LeftSide";
-import { Header } from "../components/problem-description/Header";
+import CodeEditor from "@/components/problem/CodeEditor";
+import ProblemTabs from "@/components/problem/ProblemTabs";
+import ProblemHeader from "@/components/problem/ProblemHeader";
+import TestCase from "@/components/problem/TestCase";
 import {
     ResizableHandle,
     ResizablePanel,
@@ -9,17 +10,17 @@ import {
 } from "@/components/ui/resizable";
 import { useLocation } from "react-router";
 import axios from "axios";
-import TestCase from "@/components/problem-description/TestCase";
 import { problemEndpoints } from "@/services/api";
 
-const QuestionDescription = () => {
+const ProblemWorkspace = () => {
     const [activeTab, setActiveTab] = useState("Description");
     const [problem, setProblem] = useState({});
     const [size, setSize] = useState(50);
     const problemId = useLocation()?.state;
 
-    const fetch_problem = async () => {
+    const fetchProblem = async () => {
         try {
+            if (!problemId) return;
             const response = await axios({
                 method: "GET",
                 url: problemEndpoints.GET_PROBLEM_BY_ID(problemId),
@@ -31,12 +32,12 @@ const QuestionDescription = () => {
     };
 
     useEffect(() => {
-        fetch_problem();
+        fetchProblem();
     }, [problemId]);
 
     return (
         <div className="w-full h-screen flex flex-col bg-[#f0f0f0] dark:bg-[#1a1a1a] text-neutral-800 dark:text-neutral-200 transition-colors overflow-hidden font-sans">
-            <Header />
+            <ProblemHeader />
             <div className="flex-1 p-2 overflow-hidden">
                 <ResizablePanelGroup
                     direction="horizontal"
@@ -44,7 +45,7 @@ const QuestionDescription = () => {
                 >
                     <ResizablePanel defaultSize={50} minSize={25}>
                         <div className="h-full overflow-hidden">
-                            <LeftSide
+                            <ProblemTabs
                                 activeTab={activeTab}
                                 setActiveTab={setActiveTab}
                                 problem={problem}
@@ -58,7 +59,7 @@ const QuestionDescription = () => {
                         <ResizablePanelGroup direction="vertical" className="gap-1.5">
                             <ResizablePanel defaultSize={70} minSize={25}>
                                 <div className="h-full overflow-hidden">
-                                    <RightSide
+                                    <CodeEditor
                                         setSize={setSize}
                                         initialCode={problem?.boiler_plate_code}
                                     />
@@ -80,4 +81,4 @@ const QuestionDescription = () => {
     );
 };
 
-export default QuestionDescription;
+export default ProblemWorkspace;

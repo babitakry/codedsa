@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle2, Circle, ArrowRight } from 'lucide-react';
+import { Circle, ArrowRight } from 'lucide-react';
 
-const Question = ({ problem, index }) => {
+const ProblemCard = ({ problem, index }) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
@@ -66,4 +66,4 @@ const Question = ({ problem, index }) => {
   );
 };
 
-export default Question;
+export default ProblemCard;

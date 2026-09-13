@@ -1,8 +1,8 @@
-import Loading from "@/components/auth/Loading";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle2, Target, Rocket, HelpCircle } from "lucide-react"
-import { useEffect, useState } from "react"
+import Loading from "@/components/common/Loading";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CheckCircle2, Target, Rocket, HelpCircle } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function About() {
   const [loading, setLoading] = useState(true);
@@ -10,9 +10,9 @@ export default function About() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 500)
-    return () => clearTimeout(timer)
-  }, [])
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   return !loading ? (
     <main className="container mx-auto py-10 px-4 md:px-6 lg:px-8 max-w-5xl font-sans text-neutral-800 dark:text-neutral-200">
@@ -143,5 +143,5 @@ export default function About() {
         </div>
       </section>
     </main>
-  ) : <Loading />
+  ) : <Loading />;
 }

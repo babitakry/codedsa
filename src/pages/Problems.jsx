@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Search, Shuffle, ChevronDown } from "lucide-react";
 import axios from 'axios';
-import Question from '../components/Question/Question';
+import ProblemCard from '@/components/problems/ProblemCard';
 import {
   Pagination,
   PaginationContent,
@@ -12,7 +12,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { problemEndpoints } from '@/services/api';
-import Loading from '@/components/auth/Loading';
+import Loading from '@/components/common/Loading';
 import { useNavigate } from 'react-router-dom';
 
 const TOPICS = [
@@ -38,7 +38,7 @@ const Problems = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const fetch_problem_list = async () => {
+  const fetchProblemList = async () => {
     try {
       const response = await axios({
         method: "GET",
@@ -50,15 +50,15 @@ const Problems = () => {
       });
       setProblems(response.data.data || []);
       setLoading(false);
-    } catch (error) {
-      console.error("Error fetching problems:", error);
-      setError(error.response?.data?.error || error.message);
+    } catch (err) {
+      console.error("Error fetching problems:", err);
+      setError(err.response?.data?.error || err.message);
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetch_problem_list();
+    fetchProblemList();
   }, [searchTerm, sortLevel]);
 
   const handleRandomProblem = () => {
@@ -168,7 +168,7 @@ const Problems = () => {
         <div className="divide-y divide-neutral-100 dark:divide-[#2a2a2a]">
           {filteredProblems.length > 0 ? (
             filteredProblems.map((problem, ind) => (
-              <Question index={ind} key={problem._id || ind} problem={problem} />
+              <ProblemCard index={ind} key={problem._id || ind} problem={problem} />
             ))
           ) : (
             <p className="text-center text-neutral-400 dark:text-neutral-500 py-12 text-xs">

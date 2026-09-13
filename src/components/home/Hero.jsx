@@ -1,7 +1,7 @@
 import { useAuth } from '@/context/AuthContext';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, Terminal } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
 const Hero = () => {
     const { isAuthenticated } = useAuth();
@@ -38,13 +38,14 @@ const Hero = () => {
                 <div className="mt-8 flex items-center justify-center gap-3">
                     <Link 
                         to={isAuthenticated ? "/problems" : "/signup"} 
-                        className="rounded-md bg-[#00b8a3] hover:bg-[#00a390] px-5 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-xs hover:shadow-sm transition cursor-pointer"
+                        className="rounded-md bg-[#00b8a3] hover:bg-[#00a390] px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition flex items-center gap-1.5"
                     >
-                        Start Practicing
+                        <span>{isAuthenticated ? "Go to Problems" : "Get Started for Free"}</span>
+                        <ArrowRight size={15} />
                     </Link>
                     <Link 
                         to="/problems" 
-                        className="rounded-md bg-neutral-100 hover:bg-neutral-200 dark:bg-[#282828] dark:hover:bg-[#333333] text-neutral-800 dark:text-neutral-200 border border-neutral-200 dark:border-[#383838] px-5 py-2.5 text-xs sm:text-sm font-semibold transition cursor-pointer"
+                        className="rounded-md border border-neutral-200 dark:border-[#383838] bg-white dark:bg-[#282828] hover:bg-neutral-50 dark:hover:bg-[#333333] px-5 py-2.5 text-sm font-semibold text-neutral-800 dark:text-neutral-200 transition"
                     >
                         Explore Problems
                     </Link>

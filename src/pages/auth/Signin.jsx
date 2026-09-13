@@ -3,7 +3,7 @@ import { authEndpoints } from '@/services/api';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Loading from './Loading';
+import Loading from '@/components/common/Loading';
 
 const Signin = () => {
     const [username, setUsername] = useState("");
@@ -47,10 +47,11 @@ const Signin = () => {
                     </h1>
                     <form onSubmit={onSubmit} className="space-y-4">
                         <div>
-                            <label htmlFor="text" className="block mb-1.5 text-xs font-medium text-neutral-700 dark:text-neutral-300">
+                            <label htmlFor="username" className="block mb-1.5 text-xs font-medium text-neutral-700 dark:text-neutral-300">
                                 Username
                             </label>
                             <input
+                                id="username"
                                 onChange={(e) => setUsername(e.target.value)}
                                 type="text"
                                 className="w-full px-3 py-2 text-xs sm:text-sm rounded-md border border-neutral-200 dark:border-[#383838] bg-neutral-50 dark:bg-[#1e1e1e] text-neutral-900 dark:text-neutral-100 focus:outline-none focus:border-[#00b8a3]"
@@ -63,6 +64,7 @@ const Signin = () => {
                                 Password
                             </label>
                             <input
+                                id="password"
                                 onChange={(e) => setPassword(e.target.value)}
                                 type="password"
                                 placeholder="••••••••"
