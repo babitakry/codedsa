@@ -7,7 +7,7 @@ import CodeBite from '@/assets/CodeBite.png';
 import { useAuth } from '@/context/AuthContext';
 import ThemeToggle from '@/components/common/ThemeToggle';
 
-export const ProblemHeader = () => {
+export const ProblemHeader = ({ onRun, onSubmit, isRunning = false, isSubmitting = false }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [problems, setProblems] = useState([]);
   const [drawerSearch, setDrawerSearch] = useState('');
@@ -83,18 +83,30 @@ export const ProblemHeader = () => {
         <div className="flex items-center gap-2">
           <button
             id="run-code-btn"
-            className="flex items-center gap-1 px-3 py-1.5 rounded bg-neutral-100 dark:bg-[#282828] hover:bg-neutral-200 dark:hover:bg-[#333333] text-neutral-700 dark:text-neutral-300 font-semibold transition cursor-pointer shadow-none active:scale-98"
+            onClick={onRun}
+            disabled={isRunning || isSubmitting}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-neutral-100 dark:bg-[#282828] hover:bg-neutral-200 dark:hover:bg-[#333333] text-neutral-700 dark:text-neutral-300 font-semibold transition cursor-pointer shadow-none active:scale-98 disabled:opacity-50"
           >
-            <Play className="w-3 h-3 text-[#00b8a3] fill-[#00b8a3]" />
-            <span>Run</span>
+            {isRunning ? (
+              <span className="w-3 h-3 border-2 border-[#00b8a3] border-t-transparent rounded-full animate-spin" />
+            ) : (
+              <Play className="w-3 h-3 text-[#00b8a3] fill-[#00b8a3]" />
+            )}
+            <span>{isRunning ? "Running..." : "Run"}</span>
           </button>
 
           <button
             id="submit-code-btn"
-            className="flex items-center gap-1 px-3.5 py-1.5 rounded bg-[#00b8a3] hover:bg-[#00a390] text-white font-semibold transition cursor-pointer shadow-xs active:scale-98"
+            onClick={onSubmit}
+            disabled={isRunning || isSubmitting}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded bg-[#00b8a3] hover:bg-[#00a390] text-white font-semibold transition cursor-pointer shadow-xs active:scale-98 disabled:opacity-50"
           >
-            <CheckCircle2 className="w-3 h-3" />
-            <span>Submit</span>
+            {isSubmitting ? (
+              <span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            ) : (
+              <CheckCircle2 className="w-3 h-3" />
+            )}
+            <span>{isSubmitting ? "Judging..." : "Submit"}</span>
           </button>
         </div>
 

@@ -27,5 +27,14 @@ export const chatbotEndpoints = {
     GET_CHATBOT: BASE_URL + "chatbot",
 };
 
+export const judgeEndpoints = {
+    RUN_CODE: BASE_URL + "judge/run",
+    SUBMIT_CODE: BASE_URL + "judge/submit",
+    GET_PROBLEM_SUBMISSIONS: (problemId) => BASE_URL + `judge/submissions/problem/${problemId}`,
+    GET_USER_SUBMISSIONS: BASE_URL + "judge/submissions/user",
+    GET_ALL_SUBMISSIONS: BASE_URL + "judge/submissions/all",
+    GET_SUBMISSION_BY_ID: (id) => BASE_URL + `judge/submissions/${id}`,
+};
+
 // Alias for backwards compatibility
 export const chatbotEndpoinst = chatbotEndpoints;

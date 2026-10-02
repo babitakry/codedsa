@@ -8,9 +8,9 @@ const router = express.Router();
 router.get("/getuser", authMiddleware, getUserController);
 router.put("/updateuser", authMiddleware, updateuserController);
 router.post(
-    "/upload-profile", 
-    authMiddleware, 
-    upload.single("profile_pic"), 
+    "/upload-profile",
+    authMiddleware,
+    upload.single("profilepic"),
     uploadProfilePicController
 );
 

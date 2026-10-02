@@ -6,6 +6,7 @@ import problemRouter from './src/routes/problem.js';
 import userRouter from './src/routes/user.js';
 import adminUserRoutes from './src/routes/admin.js';
 import chatbotRoutes from './src/routes/chatbot.js';
+import judgeRouter from './src/routes/judge.js';
 import db_connection from './src/database/db_connection.js';
 import multer from 'multer';
 
@@ -36,6 +37,7 @@ app.use("/api/v1/problems", problemRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/admin", adminUserRoutes);
 app.use("/api/v1/chatbot", chatbotRoutes);
+app.use("/api/v1/judge", judgeRouter);
 
 
 app.listen(port, ()=>{

@@ -14,7 +14,7 @@ export const signupController = async (req, res) => {
             return res.status(400).json({ //bad request == 400
                 success: false,
                 message: "Missing Required data"
-            })
+            });
         }
 
         // 3. check username already exist in the database

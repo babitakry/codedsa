@@ -39,6 +39,7 @@ export const authMiddleware = async (req, res, next) => {
         // after successful token verification, use next()
         next();
 
+
     } catch (error) {
         console.log("error in middleware", error);
         return res.status(500).json({
@@ -46,4 +47,4 @@ export const authMiddleware = async (req, res, next) => {
             message: "Internal Server Error in auth middleware"
         });
     }
-}
+};
