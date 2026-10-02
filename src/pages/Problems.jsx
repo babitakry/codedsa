@@ -11,9 +11,10 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { problemEndpoints } from '@/services/api';
+import { problemEndpoints, judgeEndpoints } from '@/services/api';
 import Loading from '@/components/common/Loading';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 const TOPICS = [
   "All Topics",
@@ -36,6 +37,9 @@ const Problems = () => {
   const [selectedTopic, setSelectedTopic] = useState('All Topics');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [solvedProblemIds, setSolvedProblemIds] = useState(new Set());
+  const [attemptedProblemIds, setAttemptedProblemIds] = useState(new Set());
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const fetchProblemList = async () => {
@@ -57,9 +61,52 @@ const Problems = () => {
     }
   };
 
+  const fetchUserSubmissions = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const response = await axios.get(judgeEndpoints.GET_USER_SUBMISSIONS, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const submissions = response.data?.data || [];
+      const solved = new Set();
+      const attempted = new Set();
+
+      submissions.forEach((sub) => {
+        const pId = sub?.problemId?._id || sub?.problemId;
+        if (!pId) return;
+        const idStr = pId.toString();
+
+        if (sub.status === "Accepted") {
+          solved.add(idStr);
+        } else {
+          attempted.add(idStr);
+        }
+      });
+
+      setSolvedProblemIds(solved);
+      setAttemptedProblemIds(attempted);
+    } catch (err) {
+      console.error("Error fetching user submissions for problems status:", err);
+    }
+  };
+
   useEffect(() => {
     fetchProblemList();
   }, [searchTerm, sortLevel]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchUserSubmissions();
+    } else {
+      setSolvedProblemIds(new Set());
+      setAttemptedProblemIds(new Set());
+    }
+  }, [isAuthenticated]);
 
   const handleRandomProblem = () => {
     if (problems.length > 0) {
@@ -167,9 +214,21 @@ const Problems = () => {
         {/* Problem Rows */}
         <div className="divide-y divide-neutral-100 dark:divide-[#2a2a2a]">
           {filteredProblems.length > 0 ? (
-            filteredProblems.map((problem, ind) => (
-              <ProblemCard index={ind} key={problem._id || ind} problem={problem} />
-            ))
+            filteredProblems.map((problem, ind) => {
+              const pId = problem._id?.toString();
+              const isSolved = solvedProblemIds.has(pId);
+              const isAttempted = !isSolved && attemptedProblemIds.has(pId);
+
+              return (
+                <ProblemCard
+                  index={ind}
+                  key={problem._id || ind}
+                  problem={problem}
+                  isSolved={isSolved}
+                  isAttempted={isAttempted}
+                />
+              );
+            })
           ) : (
             <p className="text-center text-neutral-400 dark:text-neutral-500 py-12 text-xs">
               No problems found matching your criteria.

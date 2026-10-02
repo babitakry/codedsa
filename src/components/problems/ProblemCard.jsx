@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Circle, ArrowRight } from 'lucide-react';
+import { Circle, CheckCircle2, Clock } from 'lucide-react';
 
-const ProblemCard = ({ problem, index }) => {
+const ProblemCard = ({ problem, index, isSolved = false, isAttempted = false }) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
@@ -18,9 +18,15 @@ const ProblemCard = ({ problem, index }) => {
         index % 2 === 0 ? 'bg-white dark:bg-[#1f1f1f]' : 'bg-neutral-50/50 dark:bg-[#1a1a1a]'
       }`}
     >
-      {/* Left: Status & Title */}
+      {/* Left: Status Icon & Title */}
       <div className="flex items-center gap-3 min-w-0 flex-1 pr-4">
-        <Circle className="w-4 h-4 text-neutral-300 dark:text-neutral-600 flex-shrink-0 group-hover:text-neutral-400 dark:group-hover:text-neutral-500 transition" />
+        {isSolved ? (
+          <CheckCircle2 className="w-4 h-4 text-[#00b8a3] flex-shrink-0" />
+        ) : isAttempted ? (
+          <Clock className="w-4 h-4 text-amber-500 flex-shrink-0" />
+        ) : (
+          <Circle className="w-4 h-4 text-neutral-300 dark:text-neutral-600 flex-shrink-0 group-hover:text-neutral-400 dark:group-hover:text-neutral-500 transition" />
+        )}
         
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100 group-hover:text-[#00b8a3] transition truncate">
@@ -29,7 +35,7 @@ const ProblemCard = ({ problem, index }) => {
         </div>
       </div>
 
-      {/* Middle/Right: Topic & Difficulty */}
+      {/* Middle/Right: Topic & Difficulty & Status */}
       <div className="flex items-center gap-4 sm:gap-8 flex-shrink-0">
         {problem?.topic && (
           <span className="hidden md:inline-block text-xs font-medium text-neutral-500 dark:text-neutral-400 bg-neutral-100 dark:bg-[#2a2a2a] px-2.5 py-0.5 rounded-full max-w-[120px] truncate">
@@ -51,16 +57,22 @@ const ProblemCard = ({ problem, index }) => {
           {problem?.difficulty}
         </span>
 
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleNavigate();
-          }}
-          className="hidden sm:flex items-center gap-1 text-xs font-medium px-3 py-1 rounded bg-neutral-100 hover:bg-[#00b8a3] dark:bg-[#2c2c2c] dark:hover:bg-[#00b8a3] text-neutral-700 dark:text-neutral-300 hover:text-white dark:hover:text-white transition cursor-pointer"
-        >
-          <span>Solve</span>
-          <ArrowRight className="w-3 h-3" />
-        </button>
+        {/* Status column matching table header */}
+        <div className="hidden sm:flex items-center justify-end w-16">
+          {isSolved ? (
+            <span className="text-[11px] font-semibold text-[#00b8a3] bg-[#00b8a3]/10 border border-[#00b8a3]/20 px-2 py-0.5 rounded-full">
+              Solved
+            </span>
+          ) : isAttempted ? (
+            <span className="text-[11px] font-semibold text-amber-500 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full">
+              Tried
+            </span>
+          ) : (
+            <span className="text-xs text-neutral-400 dark:text-neutral-600 font-normal">
+              —
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );
